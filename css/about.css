@@ -1,0 +1,101 @@
+/* --- About Page Styles --- */
+
+.about-main {
+  padding-top: 120px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-hero {
+  text-align: center;
+  padding-bottom: 60px;
+  max-width: 800px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.about-title {
+  font-size: 4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  line-height: 1.1;
+}
+
+.about-subtitle {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #555;
+  margin-top: 0;
+}
+
+.about-content-block {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 40px 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #222;
+}
+
+.about-text p {
+  margin-bottom: 24px;
+}
+
+/* Big drop cap or emphasis for first paragraph */
+.about-text p:first-child::first-letter {
+  font-size: 3.5rem;
+  float: left;
+  margin-right: 12px;
+  margin-top: -8px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.about-image-wrapper {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%); /* Adds to the noir aesthetic */
+  transition: filter 0.5s ease;
+}
+
+.about-img:hover {
+  filter: grayscale(0%);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-content-block {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 0 20px 80px;
+  }
+
+  .about-title {
+    font-size: 2.5rem;
+  }
+
+  .about-image-wrapper {
+    min-height: 400px;
+    order: -1; /* Show image above text on mobile */
+  }
+}

@@ -1,0 +1,443 @@
+/* Base styles */
+body {
+  margin: 0;
+  padding: 0;
+  /* Using a serif font for a classic, high-contrast look */
+  font-family: "Playfair Display", serif;
+  background-color: white;
+  color: black;
+  min-height: 100vh;
+  /* allow vertical scrolling but prevent accidental horizontal scroll */
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Page Transition Wiper */
+.page-wipe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff; /* White background as requested */
+  z-index: 99999;
+
+  /* Flexbox to center the random image */
+  display: flex;
+  flex-direction: column; /* Stack image and text */
+  justify-content: center;
+  align-items: center;
+
+  /* Transition settings: animate clip-path */
+  transition: clip-path 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s linear;
+  /* Default State: Fully Visible (Covering screen) */
+  clip-path: inset(0 0 0 0);
+
+  pointer-events: none;
+}
+
+/* Utility to disable transition for instant resetting */
+.page-wipe.no-transition {
+  transition: none !important;
+}
+
+/* Hidden state: Wiped away to the RIGHT (Left edge moves to 100%) */
+.page-wipe.hidden {
+  clip-path: inset(0 0 0 100%);
+  pointer-events: none;
+}
+
+/* Start state for "Covering" animation (Wipe In from Left) 
+   (This class is used in JS to set the starting position before animating to default) */
+.page-wipe.wipe-in-start {
+  clip-path: inset(0 100% 0 0);
+}
+
+/* Exiting state: Used when clicking a link. 
+   We reset origin to LEFT so it Grows from Left to Right. */
+.page-wipe.mask-in {
+  clip-path: inset(0 0 0 0);
+  pointer-events: auto; /* Block clicks */
+}
+
+.wipe-quote {
+  margin-top: 20px;
+  font-family: "Playfair Display", serif;
+  font-size: 1rem;
+  color: #000;
+  letter-spacing: 1px;
+  font-style: italic;
+  text-align: center;
+  max-width: 80%;
+  /* Simplified fade to avoid layout shift/jumping */
+  animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+html {
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* --- Header and Navigation --- */
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  /* Places the logo (left) and menu (right) on opposite ends */
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+.logo-link svg {
+  color: black;
+  height: 24px;
+  width: 24px;
+}
+
+/* Logo image sizing: keeps logo inside header and preserves aspect ratio */
+.logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+}
+
+.logo-link img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Basic styling for the container */
+.menu-btn {
+  position: relative;
+  height: 22px; /* Adjust size as needed */
+  width: 28px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Styling the hamburger lines */
+.btn-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  margin: 0 auto;
+  background: rgb(0, 0, 0);
+  border-radius: 10px;
+  transform-origin: center;
+  will-change: transform, opacity, top;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s linear, top 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* precise stacking positions for the three lines */
+.btn-line:nth-child(1) {
+  top: 4px;
+}
+.btn-line:nth-child(2) {
+  top: 50%;
+  transform: translateY(-50%);
+}
+.btn-line:nth-child(3) {
+  bottom: 4px;
+}
+
+/* Styles when the '.close' class is added (the 'X' state) */
+
+.menu-btn.close .btn-line:nth-child(1) {
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.menu-btn.close .btn-line:nth-child(2) {
+  opacity: 0; /* Fade out middle line */
+}
+
+.menu-btn.close .btn-line:nth-child(3) {
+  bottom: auto;
+  top: 50%;
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+/* Remove default blue focus outline on click, keep a clear style for keyboard users */
+.menu-btn:focus {
+  outline: none;
+}
+
+/* For browsers that support focus-visible, show a subtle non-blue outline for keyboard navigation */
+.menu-btn:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.85);
+  outline-offset: 4px;
+}
+
+/* --- Main Content and Graphic --- */
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* ensures landing fills viewport */
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+/* Signature block shown below the landing page */
+
+.signature-block {
+  /* fill the full viewport */
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  width: 100%;
+  min-height: 100vh; /* full screen */
+  margin: 0;
+  padding: 0px;
+  box-sizing: border-box;
+  color: #111;
+  background: #fafafa;
+}
+
+.signature-image-placeholder {
+  /* large image/card that fills left portion of the screen */
+  flex: 0 0 45%;
+  height: 100%;
+  background: #ffffff center/cover no-repeat;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.signature-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.signature-text-container {
+  flex: 1 1 55%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px 16px;
+  align-self: center;
+  font-size: larger;
+  font-weight: bold;
+}
+
+.signature-text-content {
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+}
+
+.signature-ceo {
+  margin: 0;
+  font-weight: 700;
+}
+
+/* --- Dropdown / Overlay Navigation --- */
+.nav-panel {
+  /* dropdown anchored to the top-right, directly under the menu button */
+  position: absolute;
+  top: 64px; /* distance from top; aligns beneath header */
+  right: 40px; /* match header padding so it sits under the button */
+  width: 240px;
+  background: rgba(0, 0, 0, 0.95);
+  border-radius: 8px;
+  padding: 12px 16px;
+  transform-origin: top right;
+  transform: translateY(-8px) scaleY(0.95);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease;
+  z-index: 9; /* below header (10) so the X button stays visible above it */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+.nav-panel.open {
+  transform: translateY(0) scaleY(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  transition: color 0.12s ease, transform 0.18s ease;
+  display: inline-block;
+  padding: 6px 4px;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: #ddd;
+  transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+  .nav-panel {
+    right: 20px;
+    width: 200px;
+    top: 58px;
+  }
+  .nav-link {
+    font-size: 0.95rem;
+  }
+}
+
+/* Responsive: stack signature block on small screens */
+@media (max-width: 640px) {
+  .signature-block {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: auto;
+    padding: 14px;
+  }
+
+  .signature-image-placeholder {
+    width: 100%;
+    height: 40vh;
+    flex: none;
+  }
+
+  .signature-text-container {
+    text-align: center;
+    padding-top: 12px;
+  }
+}
+
+.figure-graphic {
+  position: relative;
+  /* Container size ensures the graphic is visible and centered */
+  width: 80vw;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Placeholder for the central figure image */
+.graphic-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fill hero area */
+  /* Placeholder background color to simulate the black figure */
+  /* Apply a slight rotation to match the image perspective */
+  /* This needs to be replaced with a path to your actual image! */
+}
+
+/* The overlaid title text */
+.main-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* Centers the element perfectly */
+  transform: translate(-50%, -50%) rotate(10deg);
+  font-size: 5vw; /* Responsive font size */
+  text-align: center;
+  text-transform: uppercase;
+  color: white; /* Text color is white, creating strong contrast */
+  /* Adds a subtle shadow to ensure readability over the graphic */
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+}
+/* --- Card Layout and Sizing --- */
+.card-container {
+  /* Simple centering for demonstration */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100%;
+}
+
+.card {
+  width: 100%; /* Adjust as needed */
+  height: auto; /* Adjust as needed */
+  display: flex;
+  border-radius: 10px; /* Rounded corners for the whole card */
+  overflow: hidden; /* CRITICAL: Hides content that extends beyond the rounded border */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  position: relative; /* Needed for positioning the signature */
+}
+
+/* --- Left Column Styling (The Gray Bar) --- */
+.left-column {
+  width: 35%; /* Sets the width of the gray area */
+  background-color: #dcdcdc; /* Light gray color */
+}
+
+/* --- Right Content Styling (The White Area) --- */
+.right-content {
+  width: 65%; /* Sets the width of the white content area */
+  background-color: #ffffff;
+  padding: 20px; /* Inner spacing */
+  display: flex;
+  flex-direction: column; /* Stacks text block and signature vertically */
+  justify-content: space-between; /* Pushes the signature to the bottom */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 20px;
+  }
+
+  .main-title {
+    font-size: 8vw;
+  }
+
+  .figure-graphic {
+    width: 95vw;
+    height: 95vh;
+  }
+}
+
+/* --- Store Section --- */

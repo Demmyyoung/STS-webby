@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | SINNER TO SAINTS</title>
+    <link rel="icon" href="./img/Recycle white.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/about.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Page Transition Wiper (Hardcoded for stability) -->
+    <div class="page-wipe">
+        <img src="./img/Recycle black.jpg" style="width: 150px; height: auto; object-fit: contain;" alt="">
+        <p class="wipe-quote"></p>
+    </div>
+
+    <div class="container">
+        <!-- Header with Logo and Menu Icon -->
+        <header class="header">
+            <!-- Logo/Icon -->
+            <div class="logo-placeholder">
+                <a href="index.html" class="logo-link">
+                    <img src="./img/Recycle white.jpg" alt="Sinner to Saints Logo" class="logo-image">
+                </a>
+            </div>
+
+            <!-- Hamburger Menu Icon -->
+            <button class="menu-btn" aria-label="Open Menu" aria-expanded="false">
+                <span class="btn-line"></span>
+                <span class="btn-line"></span>
+                <span class="btn-line"></span>
+            </button>
+        </header>
+
+        <!-- Navigation panel -->
+        <nav class="nav-panel" aria-hidden="true" role="navigation">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <!-- Highlight 'About' as active -->
+                <li><a href="about.html" class="nav-link" style="color: #ddd; transform: translateX(4px);">About</a>
+                </li>
+                <li><a href="store.html" class="nav-link">Store</a></li>
+                <li><a href="#" class="nav-link">Cart (0)</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="about-main">
+            <section class="about-hero">
+                <h1 class="about-title">The Philosophy</h1>
+                <p class="about-subtitle">Why we move, even if it's slow.</p>
+            </section>
+
+            <section class="about-content-block">
+                <div class="about-text">
+                    <p>Sinner to Saints is not just a clothing brand; it is a movement. Born from the idea that
+                        perfection is a destination we may never reach, but the journey towards it is what defines us.
+                        We exist in the grey areas, between the falter and the rise.</p>
+
+                    <p>Our designs reflect this duality. The high contrast of black and white mirrors the balance of our
+                        nature. We believe in transparency, sustainability, and the raw, unfiltered truth of the human
+                        experience.</p>
+
+                    <p><strong>"Slow Motion is Better Than No Motion."</strong></p>
+
+                    <p>This is our mantra. In a fast-paced world, we choose deliberate action over chaotic speed. Every
+                        stitch, every fabric choice, and every design is calculated. We are building a legacy, not just
+                        a label.</p>
+                </div>
+
+                <div class="about-image-wrapper">
+                    <!-- Using one of the provided brand images -->
+                    <img src="./img/Recycle black.jpg" alt="Sinner to Saints Brand Image" class="about-img">
+                </div>
+            </section>
+        </main>
+
+        <footer
+            style="text-align: center; padding: 40px; font-family: 'Segoe UI', sans-serif; font-size: 0.9rem; color: #888;">
+            &copy; 2025 Sinner to Saints. All rights reserved.
+        </footer>
+    </div>
+
+    <!-- Re-use main.js for navigation logic and animations -->
+    <script src="./js/main.js"></script>
+</body>
+
+</html>
