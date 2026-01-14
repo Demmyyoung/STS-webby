@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "coming_soons",
+  "info": {
+    "singularName": "coming-soon",
+    "pluralName": "coming-soons",
+    "displayName": "Coming soon "
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Comingsoon": {
+      "type": "text"
+    }
+  }
+}

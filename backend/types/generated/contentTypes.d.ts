@@ -430,6 +430,34 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiComingSoonComingSoon extends Struct.CollectionTypeSchema {
+  collectionName: 'coming_soons';
+  info: {
+    displayName: 'Coming soon ';
+    pluralName: 'coming-soons';
+    singularName: 'coming-soon';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Comingsoon: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::coming-soon.coming-soon'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiIdontKnowWhatImDoingIdontKnowWhatImDoing
   extends Struct.CollectionTypeSchema {
   collectionName: 'idont_know_what_im_doings';
@@ -1003,6 +1031,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::coming-soon.coming-soon': ApiComingSoonComingSoon;
       'api::idont-know-what-im-doing.idont-know-what-im-doing': ApiIdontKnowWhatImDoingIdontKnowWhatImDoing;
       'api::product.product': ApiProductProduct;
       'plugin::content-releases.release': PluginContentReleasesRelease;
