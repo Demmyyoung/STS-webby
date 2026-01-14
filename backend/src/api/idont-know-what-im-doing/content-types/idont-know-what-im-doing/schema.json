@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "idont_know_what_im_doings",
+  "info": {
+    "singularName": "idont-know-what-im-doing",
+    "pluralName": "idont-know-what-im-doings",
+    "displayName": "idont know what im doing"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Product1": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

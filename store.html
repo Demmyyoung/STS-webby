@@ -31,12 +31,24 @@
                 </a>
             </div>
 
-            <!-- Hamburger Menu Icon -->
-            <button class="menu-btn" aria-label="Open Menu" aria-expanded="false">
-                <span class="btn-line"></span>
-                <span class="btn-line"></span>
-                <span class="btn-line"></span>
-            </button>
+            <div class="header-right">
+                <!-- Cart Icon -->
+                <a href="cart.html" class="cart-icon-btn" aria-label="View Cart">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg>
+                    <span class="cart-count">0</span>
+                </a>
+
+                <!-- Hamburger Menu Icon -->
+                <button class="menu-btn" aria-label="Open Menu" aria-expanded="false">
+                    <span class="btn-line"></span>
+                    <span class="btn-line"></span>
+                    <span class="btn-line"></span>
+                </button>
+            </div>
         </header>
 
         <!-- Navigation panel -->
@@ -46,7 +58,7 @@
                 <li><a href="about.html" class="nav-link">About</a></li>
                 <li><a href="store.html" class="nav-link" style="color: #ddd; transform: translateX(4px);">Store</a>
                 </li>
-                <li><a href="#" class="nav-link">Cart (0)</a></li>
+                <!-- Cart link removed -->
             </ul>
         </nav>
 
@@ -59,70 +71,99 @@
 
             <div class="product-grid">
                 <!-- Product 1 -->
-                <a href="#" class="product-card">
+                <div class="product-card">
                     <div class="product-image-wrapper">
                         <img src="./img/Recycle black.jpg" alt="Recycle Tee Black" class="product-img">
                     </div>
                     <div class="product-details">
                         <h3 class="product-name">Recycle Tee</h3>
-                        <span class="product-price">$45.00</span>
+                        <span class="product-price">₦45.00</span>
                     </div>
-                </a>
+                    <button class="add-to-cart-btn"
+                        onclick="addToCart({id: 'static-1', name: 'Recycle Tee', price: 45.00, image: './img/Recycle black.jpg'})"
+                        style="margin-top: 10px; width: 100%; padding: 10px; background: black; color: white; border: none; font-family: inherit; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; transition: opacity 0.3s;"
+                        onmouseenter="this.style.opacity='0.8'" onmouseleave="this.style.opacity='1'">Add to
+                        Cart</button>
+                </div>
 
                 <!-- Product 2 -->
-                <a href="#" class="product-card">
+                <div class="product-card">
                     <div class="product-image-wrapper">
                         <img src="./img/Recycle white.jpg" alt="Recycle Tee White" class="product-img">
                     </div>
                     <div class="product-details">
                         <h3 class="product-name">Recycle Tee / White</h3>
-                        <span class="product-price">$45.00</span>
+                        <span class="product-price">₦45.00</span>
                     </div>
-                </a>
+                    <button class="add-to-cart-btn"
+                        onclick="addToCart({id: 'static-2', name: 'Recycle Tee / White', price: 45.00, image: './img/Recycle white.jpg'})"
+                        style="margin-top: 10px; width: 100%; padding: 10px; background: black; color: white; border: none; font-family: inherit; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; transition: opacity 0.3s;"
+                        onmouseenter="this.style.opacity='0.8'" onmouseleave="this.style.opacity='1'">Add to
+                        Cart</button>
+                </div>
 
                 <!-- Product 3 -->
-                <a href="#" class="product-card">
+                <div class="product-card">
                     <div class="product-image-wrapper">
                         <img src="./img/Floating black.jpg" alt="Floating Tee Black" class="product-img">
                     </div>
                     <div class="product-details">
                         <h3 class="product-name">Floating Tee</h3>
-                        <span class="product-price">$50.00</span>
+                        <span class="product-price">₦50.00</span>
                     </div>
-                </a>
+                    <button class="add-to-cart-btn"
+                        onclick="addToCart({id: 'static-3', name: 'Floating Tee', price: 50.00, image: './img/Floating black.jpg'})"
+                        style="margin-top: 10px; width: 100%; padding: 10px; background: black; color: white; border: none; font-family: inherit; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; transition: opacity 0.3s;"
+                        onmouseenter="this.style.opacity='0.8'" onmouseleave="this.style.opacity='1'">Add to
+                        Cart</button>
+                </div>
 
                 <!-- Product 4 -->
-                <a href="#" class="product-card">
+                <div class="product-card">
                     <div class="product-image-wrapper">
                         <img src="./img/Floating white.jpg" alt="Floating Tee White" class="product-img">
                     </div>
                     <div class="product-details">
                         <h3 class="product-name">Floating Tee / White</h3>
-                        <span class="product-price">$50.00</span>
+                        <span class="product-price">₦50.00</span>
                     </div>
-                </a>
+                    <button class="add-to-cart-btn"
+                        onclick="addToCart({id: 'static-4', name: 'Floating Tee / White', price: 50.00, image: './img/Floating white.jpg'})"
+                        style="margin-top: 10px; width: 100%; padding: 10px; background: black; color: white; border: none; font-family: inherit; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; transition: opacity 0.3s;"
+                        onmouseenter="this.style.opacity='0.8'" onmouseleave="this.style.opacity='1'">Add to
+                        Cart</button>
+                </div>
 
                 <!-- Product 5 -->
-                <a href="#" class="product-card sold-out">
+                <div class="product-card sold-out">
                     <div class="product-image-wrapper">
                         <img src="./img/many man black.jpg" alt="Faces Hoodie" class="product-img">
                     </div>
                     <div class="product-details">
                         <h3 class="product-name">Faces Hoodie</h3>
-                        <span class="product-price">$85.00</span>
+                        <span class="product-price">₦85.00</span>
                     </div>
-                </a>
+                    <!-- Sold out - No button or disabled -->
+                    <button class="add-to-cart-btn" disabled
+                        style="margin-top: 10px; width: 100%; padding: 10px; background: #ccc; color: white; border: none; font-family: inherit; cursor: not-allowed; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;">Sold
+                        Out</button>
+                </div>
 
                 <!-- Product 6 -->
-                <a href="#" class="product-card">
+                <div class="product-card">
                     <div class="product-image-wrapper">
                         <img src="./img/many man white.jpg" alt="Faces Hoodie White" class="product-img">
                     </div>
                     <div class="product-details">
                         <h3 class="product-name">Faces Hoodie / White</h3>
-                        <span class="product-price">$85.00</span>
+                        <span class="product-price">₦85.00</span>
                     </div>
-                </a>
+                    <button class="add-to-cart-btn"
+                        onclick="addToCart({id: 'static-6', name: 'Faces Hoodie / White', price: 85.00, image: './img/many man white.jpg'})"
+                        style="margin-top: 10px; width: 100%; padding: 10px; background: black; color: white; border: none; font-family: inherit; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; transition: opacity 0.3s;"
+                        onmouseenter="this.style.opacity='0.8'" onmouseleave="this.style.opacity='1'">Add to
+                        Cart</button>
+                </div>
             </div>
         </main>
 
@@ -132,7 +173,10 @@
         </footer>
     </div>
 
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="./js/cart.js"></script>
     <script src="./js/main.js"></script>
+    <script src="./js/store.js"></script>
 </body>
 
 </html>

@@ -24,55 +24,114 @@
     <div class="container">
         <!-- Header with Logo and Menu Icon -->
         <header class="header">
-            <!-- Logo/Icon placeholder in the top-left -->
+            <!-- Logo/Icon -->
             <div class="logo-placeholder">
                 <a href="index.html" class="logo-link">
-                    <!-- Placeholder SVG for the custom icon -->
                     <img src="./img/Recycle white.jpg" alt="Sinner to Saints Logo" class="logo-image">
                 </a>
             </div>
 
-            <!-- Hamburger Menu Icon in the top-right (matches CSS `.menu-btn` structure) -->
-            <button class="menu-btn" aria-label="Open Menu" aria-expanded="false">
-                <span class="btn-line"></span>
-                <span class="btn-line"></span>
-                <span class="btn-line"></span>
-            </button>
+            <div class="header-right">
+                <!-- Cart Icon -->
+                <a href="cart.html" class="cart-icon-btn" aria-label="View Cart">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg>
+                    <span class="cart-count">0</span>
+                </a>
+
+                <!-- Hamburger Menu Icon -->
+                <button class="menu-btn" aria-label="Open Menu" aria-expanded="false">
+                    <span class="btn-line"></span>
+                    <span class="btn-line"></span>
+                    <span class="btn-line"></span>
+                </button>
+            </div>
         </header>
 
         <!-- Navigation panel (dropdown/overlay) -->
         <nav class="nav-panel" aria-hidden="true" role="navigation">
-
             <ul class="nav-list">
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="about.html" class="nav-link">About</a></li>
                 <li><a href="store.html" class="nav-link">Store</a></li>
-                <li><a href="#" class="nav-link">Cart</a></li>
+                <!-- Cart link removed (now in header) -->
             </ul>
         </nav>
 
         <!-- Main Content Area with Image and Title -->
+        <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Placeholder for the main black figure image. -->
-            <div class="figure-graphic">
-                <img src="./img/Floating white.jpg" alt="Sinner to Saints Graphic" class="graphic-image">
-                <!-- The title text overlaid on the image -->
-            </div>
+
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-bg">
+                    <img src="./img/Floating white.jpg" alt="Hero Background">
+                </div>
+                <div class="hero-content">
+
+                    <p class="hero-subtitle">Redefining Streetwear &mdash; Season 01</p>
+                    <a href="store.html" class="hero-btn">Shop Collection</a>
+                </div>
+            </section>
+
+            <!-- Featured Collection Preview -->
+            <section class="featured-section">
+                <h2 class="featured-title">Featured Drops</h2>
+                <div class="featured-grid">
+                    <!-- Featured Item 1 -->
+                    <a href="store.html" class="featured-item">
+                        <div class="featured-img-wrap">
+                            <img src="./img/Recycle black.jpg" alt="Recycle Tee">
+                        </div>
+                        <div class="featured-info">
+                            <h3>Recycle Tee</h3>
+                            <span>$45.00</span>
+                        </div>
+                    </a>
+                    <!-- Featured Item 2 -->
+                    <a href="store.html" class="featured-item">
+                        <div class="featured-img-wrap">
+                            <img src="./img/Floating white.jpg" alt="Floating Tee">
+                        </div>
+                        <div class="featured-info">
+                            <h3>Floating Tee</h3>
+                            <span>$50.00</span>
+                        </div>
+                    </a>
+                    <!-- Featured Item 3 -->
+                    <a href="store.html" class="featured-item">
+                        <div class="featured-img-wrap">
+                            <img src="./img/many man black.jpg" alt="Faces Hoodie">
+                        </div>
+                        <div class="featured-info">
+                            <h3>Faces Hoodie</h3>
+                            <span>$85.00</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="view-all-container">
+                    <a href="store.html" class="view-all-link">View Full Collection &rarr;</a>
+                </div>
+            </section>
+
+            <!-- Brand / Signature Section -->
+            <section class="signature-block">
+                <div class="signature-image-placeholder" aria-hidden="true">
+                    <img src="./img/Floating black.jpg" alt="Signature Image" class="signature-image">
+                </div>
+                <div class="signature-text-container">
+                    <p class="signature-text-content">
+                        "Slow Motion Is Better Than No Motion.<br>
+                        Keep Moving Forward."
+                    </p>
+                    <p class="signature-ceo">&mdash; AJ, CEO</p>
+                </div>
+            </section>
 
         </main>
-        <section class="signature-block">
-            <div class="signature-image-placeholder" aria-hidden="true">
-                <img src="./img/Floating black.jpg" alt="Signature Image" class="signature-image">
-            </div>
-            <div class="signature-text-container">
-                <p class="signature-text-content">
-                    Slow Motion <br>
-                    Is Better Than No Motion<br>
-                    Keep Moving Forward
-                </p>
-                <p class="signature-ceo">AJ ceo</p>
-            </div>
-        </section>
 
         <footer
             style="text-align: center; padding: 40px; font-family: 'Segoe UI', sans-serif; font-size: 0.9rem; color: #888;">
@@ -80,6 +139,8 @@
         </footer>
     </div>
 
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="./js/cart.js"></script>
     <script src="./js/main.js"></script>
 </body>
 

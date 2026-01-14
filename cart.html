@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart | SINNER TO SAINTS</title>
+    <link rel="icon" href="./img/Recycle white.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        .cart-main {
+            padding: 100px 20px 60px;
+            max-width: 800px;
+            margin: 0 auto;
+            min-height: 60vh;
+        }
+
+        .cart-title {
+            font-family: "Playfair Display", serif;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-img {
+            width: 80px;
+            height: 100px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-family: "Playfair Display", serif;
+            font-size: 1.2rem;
+            margin: 0 0 5px;
+        }
+
+        .cart-item-price {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        .cart-remove-btn {
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            font-size: 0.8rem;
+            text-decoration: underline;
+            padding: 0;
+        }
+
+        .cart-remove-btn:hover {
+            color: black;
+        }
+
+        .cart-summary {
+            margin-top: 40px;
+            text-align: right;
+            padding-top: 20px;
+            border-top: 2px solid black;
+        }
+
+        .cart-total {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-family: "Playfair Display", serif;
+        }
+
+        .checkout-btn {
+            background: black;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            transition: opacity 0.3s;
+        }
+
+        .checkout-btn:hover {
+            opacity: 0.8;
+        }
+
+        .empty-cart-msg {
+            text-align: center;
+            color: #888;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Page Transition Wiper -->
+    <div class="page-wipe">
+        <img src="./img/Recycle black.jpg" style="width: 150px; height: auto; object-fit: contain;" alt="">
+        <p class="wipe-quote"></p>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-placeholder">
+                <a href="index.html" class="logo-link">
+                    <img src="./img/Recycle white.jpg" alt="Logo" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <!-- Cart Icon -->
+                <a href="cart.html" class="cart-icon-btn" aria-label="View Cart">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg>
+                    <span class="cart-count">0</span>
+                </a>
+
+                <button class="menu-btn" aria-label="Open Menu" aria-expanded="false">
+                    <span class="btn-line"></span>
+                    <span class="btn-line"></span>
+                    <span class="btn-line"></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Navigation panel -->
+        <nav class="nav-panel" aria-hidden="true" role="navigation">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="store.html" class="nav-link">Store</a></li>
+                <!-- Cart link removed -->
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="cart-main">
+            <h1 class="cart-title">Your Cart</h1>
+
+            <div id="cart-items-container" class="cart-items">
+                <!-- Items will be injected here -->
+            </div>
+
+            <div id="cart-summary" class="cart-summary" style="display: none;">
+                <div class="cart-total">Total: ₦<span id="cart-total-value">0.00</span></div>
+                <a href="checkout.html" class="checkout-btn">Proceed to Checkout</a>
+            </div>
+
+            <div id="empty-cart-msg" class="empty-cart-msg" style="display: none;">
+                <p>Your cart is empty.</p>
+                <a href="store.html"
+                    style="color: black; text-decoration: underline; margin-top: 10px; display: inline-block;">Continue
+                    Shopping</a>
+            </div>
+        </main>
+
+        <footer
+            style="text-align: center; padding: 40px; font-family: 'Segoe UI', sans-serif; font-size: 0.9rem; color: #888;">
+            &copy; 2025 Sinner to Saints. All rights reserved.
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="./js/cart.js"></script>
+    <script src="./js/main.js"></script>
+
+    <script>
+        // Cart Page Specific Logic
+        function renderCartItems() {
+            const cart = getCart();
+            const container = document.getElementById('cart-items-container');
+            const summaryDiv = document.getElementById('cart-summary');
+            const emptyMsg = document.getElementById('empty-cart-msg');
+            const totalVal = document.getElementById('cart-total-value');
+
+            container.innerHTML = '';
+
+            if (cart.length === 0) {
+                summaryDiv.style.display = 'none';
+                emptyMsg.style.display = 'block';
+                return;
+            }
+
+            summaryDiv.style.display = 'block';
+            emptyMsg.style.display = 'none';
+
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * (item.quantity || 1);
+                total += itemTotal;
+
+                const itemEl = document.createElement('div');
+                itemEl.className = 'cart-item';
+                itemEl.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+                    <div class="cart-item-details">
+                        <h3 class="cart-item-name">${item.name}</h3>
+                        <div class="cart-item-price">₦${item.price.toFixed(2)} x ${item.quantity || 1}</div>
+                        <div class="cart-item-controls">
+                            <button class="cart-remove-btn" onclick="removeFromCart(${index})">Remove</button>
+                        </div>
+                    </div>
+                    <div style="font-weight: 600;">₦${itemTotal.toFixed(2)}</div>
+                `;
+                container.appendChild(itemEl);
+            });
+
+            totalVal.textContent = total.toFixed(2);
+            updateCartCount(); // Ensure nav is updated
+        }
+
+        // Initial render
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCartItems();
+        });
+    </script>
+</body>
+
+</html>

@@ -38,7 +38,6 @@
   flex-direction: column;
   text-decoration: none;
   color: black;
-  group: product; /* definition for potential future use, mostly semantic here */
 }
 
 .product-image-wrapper {

@@ -100,6 +100,8 @@ function setupSmoothScroll() {
 // Execute the function when the script loads
 setupSmoothScroll();
 
+// --- Dark Mode Logic ---
+
 // --- Page Transition Logic ---
 // --- Page Transition Logic ---
 document.addEventListener("DOMContentLoaded", () => {
@@ -214,3 +216,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
   });
 });
+
+// --- Lenis Smooth Scroll Setup ---
+if (typeof Lenis !== "undefined") {
+  const lenis = new Lenis({
+    duration: 0.9,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Natural exponential easing
+    smooth: true,
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+
+  requestAnimationFrame(raf);
+  console.log("Lenis initialized");
+} else {
+  console.warn("Lenis not loaded");
+}

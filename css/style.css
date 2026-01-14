@@ -156,12 +156,13 @@ html {
   right: 0;
   height: 3px;
   margin: 0 auto;
-  background: rgb(0, 0, 0);
+  background: #000; /* Default to black for general pages */
   border-radius: 10px;
   transform-origin: center;
   will-change: transform, opacity, top;
   transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.2s linear, top 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.2s linear, top 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.2s;
 }
 
 /* precise stacking positions for the three lines */
@@ -177,6 +178,10 @@ html {
 }
 
 /* Styles when the '.close' class is added (the 'X' state) */
+
+.menu-btn.close .btn-line {
+  background: #fff; /* White lines when menu is open (against black nav) */
+}
 
 .menu-btn.close .btn-line:nth-child(1) {
   top: 50%;
@@ -204,40 +209,244 @@ html {
   outline-offset: 4px;
 }
 
-/* --- Main Content and Graphic --- */
-.main-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh; /* ensures landing fills viewport */
-  width: 100%;
-  box-sizing: border-box;
-  padding-top: 20px;
-  padding-bottom: 40px;
+/* --- Hero Section Specific Header Overrides --- */
+/* When we are on the home page (or any page with .hero-section), 
+   we might want the header to be white initially */
+body:has(.hero-section) .btn-line {
+  background: #fff;
+}
+/* Fallback for browsers not supporting :has - we can also add a class via JS or manually */
+/* Fallback for browsers not supporting :has - we can also add a class via JS or manually */
+.hero-header-lines .btn-line {
+  background: #fff;
 }
 
-/* Signature block shown below the landing page */
+/* --- Header Right Group (Cart + Menu) --- */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 
+.cart-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  padding: 0;
+}
+
+.cart-icon-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background-color: black;
+  color: white;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 0.7rem;
+  font-weight: bold;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+
+/* Hero section specific overrides for cart icon too */
+body:has(.hero-section) .cart-icon-btn {
+  color: white;
+}
+body:has(.hero-section) .cart-count {
+  background-color: white;
+  color: black;
+}
+
+/* --- Main Content and Graphic --- */
+/* --- Main Content Layout --- */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: 0; /* Hero touches top */
+  padding-bottom: 0;
+  min-height: auto;
+}
+
+/* --- Hero Section --- */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 90vh; /* Takes up most of the screen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: white;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6); /* Darken image for better text readability */
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 20px;
+  animation: fadeUp 1s ease-out;
+}
+
+.hero-title {
+  font-family: "Playfair Display", serif;
+  font-size: 4rem;
+  margin: 0 0 10px 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subtitle {
+  font-family: "Segoe UI", sans-serif;
+  font-size: 1.2rem;
+  margin: 0 0 40px 0;
+  opacity: 0.9;
+  letter-spacing: 1px;
+}
+
+.hero-btn {
+  display: inline-block;
+  padding: 14px 40px;
+  border: 2px solid white;
+  color: white;
+  text-decoration: none;
+  font-family: "Segoe UI", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.hero-btn:hover {
+  background: white;
+  color: black;
+}
+
+/* --- Featured Collection Section --- */
+.featured-section {
+  padding: 80px 20px;
+  background: #fff;
+  text-align: center;
+}
+
+.featured-title {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto 50px auto;
+}
+
+.featured-item {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+}
+
+.featured-img-wrap {
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.featured-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.featured-item:hover .featured-img-wrap img {
+  transform: scale(1.05);
+}
+
+.featured-info h3 {
+  font-size: 1.1rem;
+  margin: 0 0 5px 0;
+  font-weight: 600;
+}
+
+.featured-info span {
+  font-family: "Segoe UI", sans-serif;
+  color: #666;
+}
+
+.view-all-link {
+  font-family: "Segoe UI", sans-serif;
+  text-decoration: none;
+  color: black;
+  border-bottom: 1px solid black;
+  padding-bottom: 2px;
+  transition: color 0.2s;
+}
+
+.view-all-link:hover {
+  color: #555;
+  border-color: #555;
+}
+
+/* --- Signature Block (Refined) --- */
 .signature-block {
   /* fill the full viewport */
   display: flex;
-  align-items: stretch;
-  gap: 24px;
+  align-items: center;
+  gap: 0;
   width: 100%;
-  min-height: 100vh; /* full screen */
+  /* No longer full 100vh mandatory, but substantial */
+  min-height: 60vh;
   margin: 0;
   padding: 0px;
   box-sizing: border-box;
-  color: #111;
-  background: #fafafa;
+  color: white;
+  background: #111; /* Dark background for contrast with hero/featured */
 }
 
 .signature-image-placeholder {
-  /* large image/card that fills left portion of the screen */
-  flex: 0 0 45%;
-  height: 100%;
-  background: #ffffff center/cover no-repeat;
-  border-radius: 8px;
+  flex: 1;
+  height: 60vh;
+  min-height: 400px;
   overflow: hidden;
 }
 
@@ -246,27 +455,35 @@ html {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0.8; /* Slightly dim image */
 }
 
 .signature-text-container {
-  flex: 1 1 55%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 8px 16px;
-  align-self: center;
-  font-size: larger;
-  font-weight: bold;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
 }
 
 .signature-text-content {
-  margin: 0 0 8px 0;
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  font-style: italic;
+  margin: 0 0 20px 0;
   line-height: 1.4;
+  max-width: 80%;
 }
 
 .signature-ceo {
+  font-family: "Segoe UI", sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #aaa;
   margin: 0;
-  font-weight: 700;
 }
 
 /* --- Dropdown / Overlay Navigation --- */
@@ -332,112 +549,36 @@ html {
   }
 }
 
-/* Responsive: stack signature block on small screens */
-@media (max-width: 640px) {
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
   .signature-block {
     flex-direction: column;
-    align-items: stretch;
     min-height: auto;
-    padding: 14px;
   }
 
   .signature-image-placeholder {
     width: 100%;
-    height: 40vh;
+    height: 300px;
     flex: none;
   }
 
   .signature-text-container {
-    text-align: center;
-    padding-top: 12px;
+    padding: 60px 20px;
   }
 }
 
-.figure-graphic {
-  position: relative;
-  /* Container size ensures the graphic is visible and centered */
-  width: 80vw;
-  height: 80vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Placeholder for the central figure image */
-.graphic-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* fill hero area */
-  /* Placeholder background color to simulate the black figure */
-  /* Apply a slight rotation to match the image perspective */
-  /* This needs to be replaced with a path to your actual image! */
-}
-
-/* The overlaid title text */
-.main-title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  /* Centers the element perfectly */
-  transform: translate(-50%, -50%) rotate(10deg);
-  font-size: 5vw; /* Responsive font size */
-  text-align: center;
-  text-transform: uppercase;
-  color: white; /* Text color is white, creating strong contrast */
-  /* Adds a subtle shadow to ensure readability over the graphic */
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-  white-space: nowrap;
-}
-/* --- Card Layout and Sizing --- */
-.card-container {
-  /* Simple centering for demonstration */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  min-width: 100%;
-}
-
-.card {
-  width: 100%; /* Adjust as needed */
-  height: auto; /* Adjust as needed */
-  display: flex;
-  border-radius: 10px; /* Rounded corners for the whole card */
-  overflow: hidden; /* CRITICAL: Hides content that extends beyond the rounded border */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  position: relative; /* Needed for positioning the signature */
-}
-
-/* --- Left Column Styling (The Gray Bar) --- */
-.left-column {
-  width: 35%; /* Sets the width of the gray area */
-  background-color: #dcdcdc; /* Light gray color */
-}
-
-/* --- Right Content Styling (The White Area) --- */
-.right-content {
-  width: 65%; /* Sets the width of the white content area */
-  background-color: #ffffff;
-  padding: 20px; /* Inner spacing */
-  display: flex;
-  flex-direction: column; /* Stacks text block and signature vertically */
-  justify-content: space-between; /* Pushes the signature to the bottom */
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .header {
-    padding: 15px 20px;
+/* Animation Helper */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-
-  .main-title {
-    font-size: 8vw;
-  }
-
-  .figure-graphic {
-    width: 95vw;
-    height: 95vh;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
-
-/* --- Store Section --- */

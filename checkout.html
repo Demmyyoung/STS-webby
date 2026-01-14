@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | SINNER TO SAINTS</title>
+    <link rel="icon" href="./img/Recycle white.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        .checkout-main {
+            padding: 100px 20px 60px;
+            max-width: 600px;
+            margin: 0 auto;
+            min-height: 60vh;
+        }
+
+        .checkout-title {
+            font-family: "Playfair Display", serif;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .checkout-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-family: inherit;
+        }
+
+        .checkout-summary {
+            background: #f9f9f9;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+
+        .pay-btn {
+            background: black;
+            color: white;
+            padding: 15px;
+            border: none;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Page Transition Wiper -->
+    <div class="page-wipe">
+        <img src="./img/Recycle black.jpg" style="width: 150px; height: auto; object-fit: contain;" alt="">
+        <p class="wipe-quote"></p>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-placeholder">
+                <a href="index.html" class="logo-link">
+                    <img src="./img/Recycle white.jpg" alt="Logo" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <!-- Cart Icon -->
+                <a href="cart.html" class="cart-icon-btn" aria-label="View Cart">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg>
+                    <span class="cart-count">0</span>
+                </a>
+
+                <button class="menu-btn" aria-label="Open Menu" aria-expanded="false">
+                    <span class="btn-line"></span>
+                    <span class="btn-line"></span>
+                    <span class="btn-line"></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Navigation panel -->
+        <nav class="nav-panel" aria-hidden="true" role="navigation">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="store.html" class="nav-link">Store</a></li>
+                <!-- Cart link removed -->
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="checkout-main">
+            <h1 class="checkout-title">Checkout</h1>
+
+            <form id="paymentForm" class="checkout-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email-address" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="full-name">Full Name</label>
+                    <input type="text" id="full-name" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Shipping Address</label>
+                    <textarea id="address" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="city" placeholder="City" required style="flex: 1;">
+                        <input type="text" id="state" placeholder="State/Province" required style="flex: 1;">
+                        <input type="text" id="zip" placeholder="Zip Code" required style="width: 80px;">
+                    </div>
+                </div>
+
+                <div class="checkout-summary">
+                    <h3 style="margin-top: 0;">Order Summary</h3>
+                    <div id="order-items-list" style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                        <!-- JS injected -->
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem; border-top: 1px solid #ddd; padding-top: 10px;">
+                        <span>Total</span>
+                        <span>₦<span id="checkout-total">0.00</span></span>
+                    </div>
+                </div>
+
+                <button type="submit" class="pay-btn">Pay Now</button>
+            </form>
+        </main>
+
+        <footer
+            style="text-align: center; padding: 40px; font-family: 'Segoe UI', sans-serif; font-size: 0.9rem; color: #888;">
+            &copy; 2025 Sinner to Saints. All rights reserved.
+        </footer>
+    </div>
+
+    <!-- Paystack Inline JS -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="./js/cart.js"></script>
+    <script src="./js/main.js"></script>
+
+    <script>
+        const paymentForm = document.getElementById('paymentForm');
+
+        // Render Summary
+        function renderCheckoutSummary() {
+            const cart = getCart();
+            const list = document.getElementById('order-items-list');
+            const totalEl = document.getElementById('checkout-total');
+
+            if (cart.length === 0) {
+                window.location.href = 'cart.html'; // Redirect if empty
+                return;
+            }
+
+            let total = 0;
+            list.innerHTML = '';
+
+            cart.forEach(item => {
+                const itemTotal = item.price * (item.quantity || 1);
+                total += itemTotal;
+                const p = document.createElement('p');
+                p.textContent = `${item.name} x ${item.quantity || 1} - ₦${itemTotal.toFixed(2)}`;
+                list.appendChild(p);
+            });
+
+            totalEl.textContent = total.toFixed(2);
+        }
+
+        renderCheckoutSummary();
+
+        // Paystack Payment
+        paymentForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("email-address").value;
+            const amount = getCartTotal() * 100; // Paystack expects amount in kobo (if NGN) or cents (if USD). Assuming USD for now based on display but Paystack default is NGN.
+            // CAUTION: Paystack usually processes in NGN by default unless configured.
+            // If the store is displayed in $, ensure the Paystack account supports USD or convert.
+            // For this implementation, I will treat the number as is, assuming strictly numeric value passing.
+            // If the user wants NGN, they should have priced in NGN. Since valid currency is required:
+            // I'll assume USD for now, but Paystack Test might require NGN. I'll stick to 'NGN' if the user is Nigerian based (implied by "Paystack"), or 'USD' if international.
+            // Let's assume NGN for Paystack usually, but the UI shows $. I will hardcode currency to 'NGN' if they are in Nigeria, but let's default to not sending currency (defaults to account currency).
+
+            const fullName = document.getElementById("full-name").value;
+            const address = document.getElementById("address").value;
+            const city = document.getElementById("city").value;
+            const state = document.getElementById("state").value;
+            const zip = document.getElementById("zip").value;
+
+            const handler = PaystackPop.setup({
+                key: 'pk_test_ae697fd5760e9d704fdd424c2e43a59219d89243', // REPLACE WITH YOUR PUBLIC KEY
+                email: email,
+                amount: amount,
+                currency: 'NGN', // Explicitly set to NGN
+                metadata: {
+                    custom_fields: [
+                        {
+                            display_name: "Full Name",
+                            variable_name: "full_name",
+                            value: fullName
+                        },
+                        {
+                            display_name: "Address",
+                            variable_name: "address",
+                            value: address
+                        },
+                        {
+                            display_name: "City",
+                            variable_name: "city",
+                            value: city
+                        },
+                        {
+                            display_name: "State",
+                            variable_name: "state",
+                            value: state
+                        },
+                        {
+                            display_name: "Zip Code",
+                            variable_name: "zip_code",
+                            value: zip
+                        }
+                    ]
+                },
+                onClose: function () {
+                    alert('Window closed.');
+                },
+                callback: function (response) {
+                    // let message = 'Payment complete! Reference: ' + response.reference;
+                    // alert(message);
+
+                    // Clear Cart
+                    localStorage.removeItem('sts_cart');
+
+                    // Show success
+                    document.querySelector('.checkout-main').innerHTML = `
+                        <div style="text-align: center; padding: 40px;">
+                            <h1>Thank You!</h1>
+                            <p>Your order has been placed successfully.</p>
+                            <p>Reference: ${response.reference}</p>
+                            <a href="index.html" style="text-decoration: underline; color: black; margin-top: 20px; display: inline-block;">Back to Home</a>
+                        </div>
+                    `;
+                    updateCartCount();
+                }
+            });
+
+            handler.openIframe();
+        });
+    </script>
+</body>
+
+</html>
