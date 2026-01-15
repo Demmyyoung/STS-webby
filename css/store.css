@@ -105,3 +105,36 @@
 .sold-out .product-img {
   opacity: 0.5;
 }
+.so-out .product-img {
+  opacity: 0.5;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .store-main {
+    padding-top: 80px;
+  }
+
+  .product-grid {
+    /* Allow 2 columns on mobile by reducing min size */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 0 15px 60px;
+  }
+
+  .product-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* For very small screens, maybe stack them if preferred, 
+       but 2-column is standard for modern e-commerce. 
+       Let's stick to 2 columns but ensure text fits */
+  .product-name {
+    font-size: 1rem;
+  }
+  .product-price {
+    font-size: 0.9rem;
+  }
+}

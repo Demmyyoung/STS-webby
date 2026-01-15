@@ -572,6 +572,25 @@ body:has(.hero-section) .cart-count {
   .signature-text-container {
     padding: 60px 20px;
   }
+
+  .featured-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  /* Allow featured items to stay 2-up or stack? 
+       Usually 1-up is better for Featured on tiny screens */
+  .featured-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Animation Helper */
