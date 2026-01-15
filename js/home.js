@@ -72,13 +72,21 @@ document.addEventListener("DOMContentLoaded", async () => {
           if (imgObj) {
             const imgAttrs = imgObj.attributes ? imgObj.attributes : imgObj;
             if (imgAttrs.url) {
-              imageUrl = `${API_URL}${imgAttrs.url}`;
+              if (imgAttrs.url.startsWith("http")) {
+                imageUrl = imgAttrs.url;
+              } else {
+                imageUrl = `${API_URL}${imgAttrs.url}`;
+              }
             } else if (
               imgAttrs.formats &&
               imgAttrs.formats.medium &&
               imgAttrs.formats.medium.url
             ) {
-              imageUrl = `${API_URL}${imgAttrs.formats.medium.url}`;
+              if (imgAttrs.formats.medium.url.startsWith("http")) {
+                imageUrl = imgAttrs.formats.medium.url;
+              } else {
+                imageUrl = `${API_URL}${imgAttrs.formats.medium.url}`;
+              }
             }
           }
         }

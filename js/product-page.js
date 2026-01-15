@@ -136,7 +136,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Check if we have a direct url
         if (imgAttrs.url) {
-          imageUrl = `${API_URL}${imgAttrs.url}`;
+          if (imgAttrs.url.startsWith("http")) {
+            imageUrl = imgAttrs.url;
+          } else {
+            imageUrl = `${API_URL}${imgAttrs.url}`;
+          }
         }
         // fallback to formats
         else if (
