@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const params = new URLSearchParams(window.location.search);
   const productId = params.get("id");
 
-  const API_URL = "http://localhost:1337";
+  const API_URL = "https://dynamic-addition-ee01c0a27a.strapiapp.com";
   const mainImg = document.getElementById("main-product-img");
   const titleEl = document.getElementById("product-title");
   const priceEl = document.getElementById("product-price");

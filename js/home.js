@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const featuredGrid = document.querySelector(".featured-grid");
 
   // API URL - change localhost to your production URL when deploying
-  const API_URL = "http://localhost:1337";
+  const API_URL = "https://dynamic-addition-ee01c0a27a.strapiapp.com";
 
   // Check if we are on the home page and if the grid exists
   if (!featuredGrid) return;
