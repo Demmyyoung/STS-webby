@@ -38,6 +38,9 @@
   flex-direction: column;
   text-decoration: none;
   color: black;
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .product-image-wrapper {

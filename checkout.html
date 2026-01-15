@@ -223,6 +223,9 @@
             const state = document.getElementById("state").value;
             const zip = document.getElementById("zip").value;
 
+            const cart = getCart();
+            const orderItems = cart.map(item => `${item.name} (${item.size || 'N/A'}) x ${item.quantity || 1}`).join(", ");
+
             const handler = PaystackPop.setup({
                 key: 'pk_test_ae697fd5760e9d704fdd424c2e43a59219d89243', // REPLACE WITH YOUR PUBLIC KEY
                 email: email,
@@ -230,6 +233,11 @@
                 currency: 'NGN', // Explicitly set to NGN
                 metadata: {
                     custom_fields: [
+                        {
+                            display_name: "Order Items",
+                            variable_name: "order_items",
+                            value: orderItems
+                        },
                         {
                             display_name: "Full Name",
                             variable_name: "full_name",

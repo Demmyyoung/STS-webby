@@ -382,6 +382,9 @@ body:has(.hero-section) .cart-count {
   color: inherit;
   display: block;
   cursor: pointer;
+  max-width: 350px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .featured-img-wrap {

@@ -29,6 +29,16 @@
         "videos",
         "audios"
       ]
+    },
+    "Size": {
+      "type": "enumeration",
+      "enum": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ]
     }
   }
 }

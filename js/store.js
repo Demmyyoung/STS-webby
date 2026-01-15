@@ -130,7 +130,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                   ? `<p class="product-description" style="margin: 0.5rem 0; font-size: 0.9rem; color: #666;">${description}</p>`
                   : ""
               }
-              <button class="add-to-cart-btn" style="
+              <a href="product.html?id=${
+                product.documentId || product.id
+              }" class="add-to-cart-btn" style="
+                  display: block;
+                  text-decoration: none;
+                  text-align: center;
                   margin-top: 10px;
                   width: 100%;
                   padding: 10px;
@@ -143,23 +148,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                   letter-spacing: 1px;
                   font-size: 0.9rem;
                   transition: opacity 0.3s;
-              ">Add to Cart</button>
+              ">View Product</a>
           `;
 
-        // Add event listener to the button
-        const btn = card.querySelector(".add-to-cart-btn");
-        btn.addEventListener("click", () => {
-          // Construct product object for cart
-          const productToAdd = {
-            id: product.id,
-            name: name,
-            price: parseFloat(price),
-            image: imageUrl,
-          };
-          addToCart(productToAdd);
-        });
-
+        // No click listener needed for link, it just navigates
         // Add hover effect via JS since inline styles are used (or could use CSS class)
+        const btn = card.querySelector(".add-to-cart-btn");
         btn.addEventListener("mouseenter", () => (btn.style.opacity = "0.8"));
         btn.addEventListener("mouseleave", () => (btn.style.opacity = "1"));
 

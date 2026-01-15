@@ -1,0 +1,11 @@
+{
+  "name": "sts-webby-root",
+  "version": "1.0.0",
+  "description": "Root package.json to forward commands to backend",
+  "scripts": {
+    "develop": "npm run develop --prefix backend",
+    "dev": "npm run develop --prefix backend",
+    "start": "npm run start --prefix backend",
+    "build": "npm run build --prefix backend"
+  }
+}

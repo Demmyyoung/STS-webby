@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | SINNER TO SAINTS</title>
+    <link rel="icon" href="./img/Recycle white.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/store.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Product Page Specific Styles */
+        .product-page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 40px 100px;
+            /* Top padding for header */
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            min-height: 80vh;
+            align-items: start;
+        }
+
+        .product-image-section {
+            width: 100%;
+            background-color: #f5f5f5;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+        }
+
+        .product-image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .product-title {
+            font-family: "Playfair Display", serif;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .product-price-lg {
+            font-size: 1.5rem;
+            color: #444;
+            font-weight: 500;
+        }
+
+        .product-desc {
+            font-family: "Segoe UI", sans-serif;
+            color: #666;
+            line-height: 1.6;
+            font-size: 1rem;
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        /* Size Selector */
+        .size-selector-container {
+            margin-top: 30px;
+        }
+
+        .size-label {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .size-options {
+            display: flex;
+            gap: 15px;
+        }
+
+        .size-option-input {
+            display: none;
+        }
+
+        .size-option {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-family: "Segoe UI", sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .size-option:hover {
+            border-color: #000;
+        }
+
+        .size-option-input:checked+.size-option {
+            background-color: #000;
+            color: #fff;
+            border-color: #000;
+        }
+
+        .add-btn {
+            margin-top: 40px;
+            width: 100%;
+            max-width: 400px;
+            padding: 18px;
+            background: black;
+            color: white;
+            border: none;
+            font-family: inherit;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1rem;
+            transition: opacity 0.3s;
+        }
+
+        .add-btn:hover {
+            opacity: 0.8;
+        }
+
+        .add-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 1;
+        }
+
+        @media screen and (max-width: 768px) {
+            .product-page-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 100px 20px 60px;
+            }
+
+            .product-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Page Transition Wiper -->
+    <div class="page-wipe">
+        <img src="./img/Recycle black.jpg" style="width: 150px; height: auto; object-fit: contain;" alt="">
+        <p class="wipe-quote"></p>
+    </div>
+
+    <div class="container">
+        <!-- Header copied from index.html -->
+        <header class="header" style="position: absolute;">
+            <div class="logo-placeholder">
+                <a href="index.html" class="logo-link">
+                    <img src="./img/Recycle white.jpg" alt="Sinner to Saints Logo" class="logo-image" id="logo-img">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="cart.html" class="cart-icon-btn" aria-label="View Cart">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg>
+                    <span class="cart-count">0</span>
+                </a>
+
+                <button class="menu-btn" aria-label="Open Menu" aria-expanded="false">
+                    <span class="btn-line"></span>
+                    <span class="btn-line"></span>
+                    <span class="btn-line"></span>
+                </button>
+            </div>
+        </header>
+
+        <nav class="nav-panel" aria-hidden="true" role="navigation">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="store.html" class="nav-link">Store</a></li>
+            </ul>
+        </nav>
+
+        <main class="product-page-container">
+            <!-- Left: Image -->
+            <div class="product-image-section">
+                <!-- Image filled by JS -->
+                <img id="main-product-img" src="" alt="Loading...">
+            </div>
+
+            <!-- Right: Details -->
+            <div class="product-info-section">
+                <h1 class="product-title" id="product-title">Loading...</h1>
+                <div class="product-price-lg" id="product-price">--</div>
+
+                <div class="size-selector-container">
+                    <span class="size-label">Select Size</span>
+                    <div class="size-options">
+                        <label>
+                            <input type="radio" name="size" value="S" class="size-option-input">
+                            <span class="size-option">S</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="size" value="M" class="size-option-input">
+                            <span class="size-option">M</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="size" value="L" class="size-option-input">
+                            <span class="size-option">L</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="size" value="XL" class="size-option-input">
+                            <span class="size-option">XL</span>
+                        </label>
+                    </div>
+                </div>
+
+                <p class="product-desc" id="product-desc"></p>
+
+                <button id="add-to-cart-page-btn" class="add-btn">Add to Cart</button>
+            </div>
+        </main>
+
+        <footer
+            style="text-align: center; padding: 40px; font-family: 'Segoe UI', sans-serif; font-size: 0.9rem; color: #888;">
+            &copy; 2025 Sinner to Saints. All rights reserved.
+        </footer>
+    </div>
+
+    <!-- Re-using existing scrips -->
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="./js/cart.js"></script>
+    <script src="./js/main.js"></script>
+    <!-- New script for single product logic -->
+    <script src="./js/product-page.js"></script>
+</body>
+
+</html>
