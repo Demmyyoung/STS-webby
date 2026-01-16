@@ -1,21 +1,32 @@
+// API URL - change localhost to your production URL when deploying
+const API_URL = "https://dynamic-addition-ee01c0a27a.strapiapp.com";
+
+// Start fetching immediately
+const featuredPromise = fetch(`${API_URL}/api/products?populate=*`)
+  .then((response) => {
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    return response.json();
+  })
+  .catch((error) => {
+    console.error("Early fetch error:", error);
+    return null;
+  });
+
 document.addEventListener("DOMContentLoaded", async () => {
   const featuredGrid = document.querySelector(".featured-grid");
-
-  // API URL - change localhost to your production URL when deploying
-  const API_URL = "https://dynamic-addition-ee01c0a27a.strapiapp.com";
 
   // Check if we are on the home page and if the grid exists
   if (!featuredGrid) return;
 
   try {
-    // Fetch products from Strapi
-    const response = await fetch(`${API_URL}/api/products?populate=*`);
+    const payload = await featuredPromise;
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (!payload) {
+      // Only if fetch totally failed and returned null
+      renderComingSoon(featuredGrid);
+      return;
     }
 
-    const payload = await response.json();
     const products = payload.data;
 
     // If we have products, pick 3 random ones and render
