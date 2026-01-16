@@ -70,99 +70,10 @@
             </section>
 
             <div class="product-grid">
-                <!-- Product 1 -->
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="./img/Recycle black.jpg" alt="Recycle Tee Black" class="product-img">
-                    </div>
-                    <div class="product-details">
-                        <h3 class="product-name">Recycle Tee</h3>
-                        <span class="product-price">₦45.00</span>
-                    </div>
-                    <button class="add-to-cart-btn"
-                        onclick="addToCart({id: 'static-1', name: 'Recycle Tee', price: 45.00, image: './img/Recycle black.jpg'})"
-                        style="margin-top: 10px; width: 100%; padding: 10px; background: black; color: white; border: none; font-family: inherit; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; transition: opacity 0.3s;"
-                        onmouseenter="this.style.opacity='0.8'" onmouseleave="this.style.opacity='1'">Add to
-                        Cart</button>
-                </div>
-
-                <!-- Product 2 -->
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="./img/Recycle white.jpg" alt="Recycle Tee White" class="product-img">
-                    </div>
-                    <div class="product-details">
-                        <h3 class="product-name">Recycle Tee / White</h3>
-                        <span class="product-price">₦45.00</span>
-                    </div>
-                    <button class="add-to-cart-btn"
-                        onclick="addToCart({id: 'static-2', name: 'Recycle Tee / White', price: 45.00, image: './img/Recycle white.jpg'})"
-                        style="margin-top: 10px; width: 100%; padding: 10px; background: black; color: white; border: none; font-family: inherit; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; transition: opacity 0.3s;"
-                        onmouseenter="this.style.opacity='0.8'" onmouseleave="this.style.opacity='1'">Add to
-                        Cart</button>
-                </div>
-
-                <!-- Product 3 -->
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="./img/Floating black.jpg" alt="Floating Tee Black" class="product-img">
-                    </div>
-                    <div class="product-details">
-                        <h3 class="product-name">Floating Tee</h3>
-                        <span class="product-price">₦50.00</span>
-                    </div>
-                    <button class="add-to-cart-btn"
-                        onclick="addToCart({id: 'static-3', name: 'Floating Tee', price: 50.00, image: './img/Floating black.jpg'})"
-                        style="margin-top: 10px; width: 100%; padding: 10px; background: black; color: white; border: none; font-family: inherit; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; transition: opacity 0.3s;"
-                        onmouseenter="this.style.opacity='0.8'" onmouseleave="this.style.opacity='1'">Add to
-                        Cart</button>
-                </div>
-
-                <!-- Product 4 -->
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="./img/Floating white.jpg" alt="Floating Tee White" class="product-img">
-                    </div>
-                    <div class="product-details">
-                        <h3 class="product-name">Floating Tee / White</h3>
-                        <span class="product-price">₦50.00</span>
-                    </div>
-                    <button class="add-to-cart-btn"
-                        onclick="addToCart({id: 'static-4', name: 'Floating Tee / White', price: 50.00, image: './img/Floating white.jpg'})"
-                        style="margin-top: 10px; width: 100%; padding: 10px; background: black; color: white; border: none; font-family: inherit; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; transition: opacity 0.3s;"
-                        onmouseenter="this.style.opacity='0.8'" onmouseleave="this.style.opacity='1'">Add to
-                        Cart</button>
-                </div>
-
-                <!-- Product 5 -->
-                <div class="product-card sold-out">
-                    <div class="product-image-wrapper">
-                        <img src="./img/many man black.jpg" alt="Faces Hoodie" class="product-img">
-                    </div>
-                    <div class="product-details">
-                        <h3 class="product-name">Faces Hoodie</h3>
-                        <span class="product-price">₦85.00</span>
-                    </div>
-                    <!-- Sold out - No button or disabled -->
-                    <button class="add-to-cart-btn" disabled
-                        style="margin-top: 10px; width: 100%; padding: 10px; background: #ccc; color: white; border: none; font-family: inherit; cursor: not-allowed; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;">Sold
-                        Out</button>
-                </div>
-
-                <!-- Product 6 -->
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="./img/many man white.jpg" alt="Faces Hoodie White" class="product-img">
-                    </div>
-                    <div class="product-details">
-                        <h3 class="product-name">Faces Hoodie / White</h3>
-                        <span class="product-price">₦85.00</span>
-                    </div>
-                    <button class="add-to-cart-btn"
-                        onclick="addToCart({id: 'static-6', name: 'Faces Hoodie / White', price: 85.00, image: './img/many man white.jpg'})"
-                        style="margin-top: 10px; width: 100%; padding: 10px; background: black; color: white; border: none; font-family: inherit; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; transition: opacity 0.3s;"
-                        onmouseenter="this.style.opacity='0.8'" onmouseleave="this.style.opacity='1'">Add to
-                        Cart</button>
+                <!-- Loading State -->
+                <div class="loading-indicator">
+                    <div class="spinner"></div>
+                    <p>Loading Collection...</p>
                 </div>
             </div>
         </main>
