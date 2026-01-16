@@ -104,7 +104,9 @@ setupSmoothScroll();
 
 // --- Page Transition Logic ---
 // --- Page Transition Logic ---
-document.addEventListener("DOMContentLoaded", () => {
+// --- Page Transition Logic ---
+// Run immediately (script is at end of body, so elements exist)
+(() => {
   // 1. Get or Inject the wiper element
   // Ideally, it's hardcoded in HTML to prevent flicker. If not found, we create it.
   let wiper = document.querySelector(".page-wipe");
@@ -215,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = href;
     }, 1000);
   });
-});
+})();
 
 // --- Lenis Smooth Scroll Setup ---
 if (typeof Lenis !== "undefined") {

@@ -72,17 +72,11 @@ body {
   font-style: italic;
   text-align: center;
   max-width: 80%;
-  /* Simplified fade to avoid layout shift/jumping */
-  animation: fadeIn 0.8s ease-in;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  color: #000;
+  letter-spacing: 1px;
+  font-style: italic;
+  text-align: center;
+  max-width: 80%;
 }
 
 html {
