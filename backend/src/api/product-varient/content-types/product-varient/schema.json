@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_varients",
+  "info": {
+    "singularName": "product-varient",
+    "pluralName": "product-varients",
+    "displayName": "product-varient"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "size": {
+      "type": "enumeration",
+      "enum": [
+        "xs",
+        "s",
+        "m",
+        "l",
+        "xl",
+        "xxl"
+      ]
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "product": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product.product",
+      "inversedBy": "product_varients"
+    }
+  }
+}

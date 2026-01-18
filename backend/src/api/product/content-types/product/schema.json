@@ -30,19 +30,11 @@
         "audios"
       ]
     },
-    "quantity": {
-      "type": "integer"
-    },
-    "size": {
-      "type": "enumeration",
-      "enum": [
-        "xs",
-        "s",
-        "m",
-        "l",
-        "xl",
-        "xxl"
-      ]
+    "product_varients": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product-varient.product-varient",
+      "mappedBy": "product"
     }
   }
 }

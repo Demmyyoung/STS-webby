@@ -1,5 +1,7 @@
 console.log("Product Page Script Loaded!"); // Debug: Immediate check
 
+console.log("Product Page Script Loaded!"); // Debug: Immediate check
+
 document.addEventListener("DOMContentLoaded", async () => {
   // 1. Get ID from URL
   const params = new URLSearchParams(window.location.search);
@@ -11,41 +13,46 @@ document.addEventListener("DOMContentLoaded", async () => {
   const priceEl = document.getElementById("product-price");
   const descEl = document.getElementById("product-desc");
   const addBtn = document.getElementById("add-to-cart-page-btn");
-  const sizeInputs = document.querySelectorAll(".size-option-input");
+  const stockDisplay = document.getElementById("stock-display");
+  const sizeContainer = document.getElementById("size-container");
+  const sizeWrapper = document.getElementById("size-options-wrapper");
 
   let currentProduct = null;
-  let selectedSize = null;
-
-  // Handle Size Selection (Legacy code removed - logic now handled in data fetch)
-  // Since we now have a single size per product entry, we pre-select it in the fetch logic.
+  let selectedVariant = null; // Store the entire variant object (id, size, quantity)
 
   // Handle Add to Cart
   addBtn.addEventListener("click", () => {
     if (!currentProduct) return;
 
-    if (!selectedSize) {
+    if (!selectedVariant) {
       alert("Please select a size.");
       return;
     }
 
-    // Add to cart with size
-    // We reuse the addToCart global function from cart.js if available
-    // Or we assume cart.js logic: create object and call addToCart(item)
+    // Check stock one last time (though button should be disabled)
+    if (selectedVariant.quantity <= 0) {
+      alert("This size is out of stock.");
+      return;
+    }
 
     const cartItem = {
       id: currentProduct.id, // Keep original ID
-      uniqueId: `${currentProduct.id}-${selectedSize}`, // Unique ID for cart differentiation
-      name: `${currentProduct.name} (${selectedSize})`,
-      price: currentProduct.price,
+      uniqueId: `${currentProduct.id}-${selectedVariant.size}`, // Unique ID for cart differentiation
+      name: `${currentProduct.name} (${selectedVariant.size})`,
+      price: currentProduct.price, // Assuming price is on the main product for now
       image: currentProduct.image,
-      size: selectedSize,
+      size: selectedVariant.size,
+      variantId: selectedVariant.id, // Store variant ID if needed for backend updates later
     };
 
     if (window.addToCart) {
       window.addToCart(cartItem);
+      const originalText = addBtn.textContent;
       addBtn.textContent = "Added!";
+      addBtn.disabled = true;
       setTimeout(() => {
-        addBtn.textContent = "Add to Cart";
+        addBtn.textContent = originalText;
+        addBtn.disabled = false;
       }, 2000);
     } else {
       console.error("addToCart function not found!");
@@ -60,8 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    // Fetch specific product by ID
-    // Note: Strapi findOne usually requires /api/products/ID
+    // Fetch specific product by ID with populate=* to get relations
     const response = await fetch(
       `${API_URL}/api/products/${productId}?populate=*`,
     );
@@ -73,66 +79,49 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (!productData) throw new Error("No data");
 
-    // Helper to extract attributes (v4 vs v5)
     const attrs = productData.attributes ? productData.attributes : productData;
-    console.log("Product Attributes Keys:", Object.keys(attrs)); // See exact field names
     console.log("Product Attributes:", attrs);
 
-    // Extract Data
+    // Extract Basic Info
     const name = attrs.Name || attrs.name || attrs.Title || "Unknown Product";
-
     let price = "0.00";
     let rawPrice = attrs.Price !== undefined ? attrs.Price : attrs.price;
     if (rawPrice !== undefined) price = parseFloat(rawPrice).toFixed(2);
 
-    // Quantity & Size Handling
-    const quantity =
-      attrs.Quantity !== undefined ? attrs.Quantity : attrs.quantity;
-    const size = attrs.Size || attrs.size;
+    // Image Handling
+    let imageUrl = "./img/Recycle black.jpg";
+    const imgField =
+      attrs.ProductImage ||
+      attrs.productImage ||
+      attrs.productimage ||
+      attrs.Image ||
+      attrs.image;
 
-    console.log("Stock Info - Quantity:", quantity, "Size:", size);
+    if (imgField) {
+      let imgObj = null;
+      if (Array.isArray(imgField)) imgObj = imgField[0];
+      else if (imgField.data) {
+        imgObj = Array.isArray(imgField.data)
+          ? imgField.data[0]
+          : imgField.data;
+      } else imgObj = imgField;
 
-    // Render Size if available
-    const sizeContainer = document.getElementById("size-container");
-    const sizeWrapper = document.getElementById("size-options-wrapper");
-
-    // Reset selected size logic
-    selectedSize = null;
-
-    if (size) {
-      sizeContainer.style.display = "block";
-      // Create a single immutable size option
-      sizeWrapper.innerHTML = `
-            <div class="size-option" style="background-color: #000; color: #fff; border-color: #000; cursor: default;">
-                ${size.toUpperCase()}
-            </div>
-        `;
-      selectedSize = size.toUpperCase(); // Auto-select the only available size
-    } else {
-      sizeContainer.style.display = "none";
-      selectedSize = "ONE SIZE"; // Default if no size specified
-    }
-
-    // Render Stock Status
-    const stockDisplay = document.getElementById("stock-display");
-    let isOutOfStock = false;
-
-    if (quantity !== undefined && quantity !== null) {
-      if (quantity <= 0) {
-        stockDisplay.innerHTML = `<span style="color: #c00; font-weight: 600;">Out of Stock</span>`;
-        isOutOfStock = true;
-      } else if (quantity < 5) {
-        stockDisplay.innerHTML = `<span style="color: #c80; font-weight: 600;">Only ${quantity} left in stock!</span>`;
-      } else {
-        stockDisplay.innerHTML = `<span style="color: #0a0; font-weight: 600;">In Stock (${quantity})</span>`;
+      if (imgObj) {
+        const imgAttrs = imgObj.attributes ? imgObj.attributes : imgObj;
+        if (imgAttrs.url) {
+          imageUrl = imgAttrs.url.startsWith("http")
+            ? imgAttrs.url
+            : `${API_URL}${imgAttrs.url}`;
+        }
       }
-    } else {
-      // Fallback if quantity field is missing in data
-      stockDisplay.innerHTML = "";
     }
 
+    // Render Basic Info
+    titleEl.textContent = name;
+    priceEl.textContent = `₦${price}`;
+
+    // Description
     let description = attrs.Description || attrs.description || "";
-    // Handle Rich Text (Blocks)
     if (typeof description === "object" && description !== null) {
       if (Array.isArray(description)) {
         description = description
@@ -146,71 +135,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         description = "";
       }
     }
-
-    // Image Handling
-    let imageUrl = "./img/Recycle black.jpg";
-    const imgField =
-      attrs.ProductImage ||
-      attrs.productImage ||
-      attrs.productimage ||
-      attrs.Image ||
-      attrs.image;
-
-    // alert("Image Field Found: " + !!imgField); // Debug Alert
-
-    if (imgField) {
-      let imgObj = null;
-      if (Array.isArray(imgField)) imgObj = imgField[0];
-      else if (imgField.data) {
-        imgObj = Array.isArray(imgField.data)
-          ? imgField.data[0]
-          : imgField.data;
-      } else imgObj = imgField;
-
-      if (imgObj) {
-        const imgAttrs = imgObj.attributes ? imgObj.attributes : imgObj;
-        console.log("Image Attributes:", imgAttrs); // Debug
-
-        // Check if we have a direct url
-        if (imgAttrs.url) {
-          if (imgAttrs.url.startsWith("http")) {
-            imageUrl = imgAttrs.url;
-          } else {
-            imageUrl = `${API_URL}${imgAttrs.url}`;
-          }
-        }
-        // fallback to formats
-        else if (
-          imgAttrs.formats &&
-          imgAttrs.formats.medium &&
-          imgAttrs.formats.medium.url
-        ) {
-          imageUrl = `${API_URL}${imgAttrs.formats.medium.url}`;
-        } else if (
-          imgAttrs.formats &&
-          imgAttrs.formats.small &&
-          imgAttrs.formats.small.url
-        ) {
-          imageUrl = `${API_URL}${imgAttrs.formats.small.url}`;
-        } else if (
-          imgAttrs.formats &&
-          imgAttrs.formats.thumbnail &&
-          imgAttrs.formats.thumbnail.url
-        ) {
-          imageUrl = `${API_URL}${imgAttrs.formats.thumbnail.url}`;
-        }
-      }
-    }
-
-    // Render Data
-    titleEl.textContent = name;
-    priceEl.textContent = `₦${price}`;
     descEl.textContent = description;
+
     mainImg.src = imageUrl;
     mainImg.alt = name;
     document.title = `${name} | SINNER TO SAINTS`;
 
-    // Store for Cart Logic
     currentProduct = {
       id: productData.id,
       name: name,
@@ -218,23 +148,123 @@ document.addEventListener("DOMContentLoaded", async () => {
       image: imageUrl,
     };
 
-    // Update Button State
-    if (isOutOfStock) {
-      addBtn.disabled = true;
-      addBtn.textContent = "Out of Stock";
-      addBtn.style.backgroundColor = "#ccc";
-      addBtn.style.cursor = "not-allowed";
+    // --- VARIANT & SIZE LOGIC ---
+    let variants = [];
+    const rawVariants = attrs.product_varients || attrs.productVarients; // Check casing from schema
+
+    if (rawVariants && rawVariants.data && rawVariants.data.length > 0) {
+      variants = rawVariants.data.map((v) => ({
+        id: v.id,
+        ...v.attributes,
+      }));
+    }
+
+    console.log("Parsed Variants:", variants);
+
+    // Reset UI
+    sizeWrapper.innerHTML = "";
+    selectedVariant = null;
+    addBtn.disabled = true; // Disable until size selected
+    addBtn.textContent = "Select Size";
+    stockDisplay.innerHTML = "";
+
+    if (variants.length > 0) {
+      sizeContainer.style.display = "block";
+
+      // Sort variants order? (Optional: XS, S, M, L, XL, XXL)
+      const sizeOrder = ["xs", "s", "m", "l", "xl", "xxl"];
+      variants.sort((a, b) => {
+        return (
+          sizeOrder.indexOf(a.size.toLowerCase()) -
+          sizeOrder.indexOf(b.size.toLowerCase())
+        );
+      });
+
+      variants.forEach((variant) => {
+        const sizeBox = document.createElement("div");
+        sizeBox.classList.add("size-option");
+        sizeBox.textContent = variant.size.toUpperCase();
+
+        // Check if out of stock visually
+        if (variant.quantity <= 0) {
+          sizeBox.style.opacity = "0.5";
+          sizeBox.style.textDecoration = "line-through";
+          sizeBox.style.cursor = "not-allowed";
+          sizeBox.title = "Out of Stock";
+        } else {
+          sizeBox.onclick = () => selectSize(variant, sizeBox);
+        }
+
+        sizeWrapper.appendChild(sizeBox);
+      });
     } else {
-      addBtn.disabled = false;
-      addBtn.textContent = "Add to Cart";
-      addBtn.style.backgroundColor = "black";
-      addBtn.style.cursor = "pointer";
+      // Fallback for products with no variants (e.g. legacy or simple products)
+      // Check if main product has quantity/size direct fields?
+      // Based on previous code, there was fallback. Let's keep it minimal for now.
+      // If no variants, we might default to "One Size" logic or just enable adding if quantity > 0 on main.
+
+      // Assuming NEW schema usage: Main product might not have quantity anymore.
+      // But for safety:
+      const mainQty = attrs.Quantity || attrs.quantity;
+      if (mainQty !== undefined) {
+        sizeContainer.style.display = "none";
+        selectedVariant = {
+          size: "One Size",
+          quantity: mainQty,
+          id: "default",
+        }; // Mock variant
+        updateStockUI(mainQty);
+        addBtn.disabled = mainQty <= 0;
+        addBtn.textContent = mainQty <= 0 ? "Out of Stock" : "Add to Cart";
+      } else {
+        // Zero variants and No main quantity?
+        sizeContainer.style.display = "none";
+        stockDisplay.innerHTML = "Stock information unavailable";
+        addBtn.disabled = true;
+      }
+    }
+
+    function selectSize(variant, element) {
+      // Remove active class from all
+      document.querySelectorAll(".size-option").forEach((el) => {
+        el.style.backgroundColor = "";
+        el.style.color = "";
+        el.style.borderColor = "#ddd";
+      });
+
+      // Set active style
+      element.style.backgroundColor = "#000";
+      element.style.color = "#fff";
+      element.style.borderColor = "#000";
+
+      selectedVariant = variant;
+      updateStockUI(variant.quantity);
+
+      if (variant.quantity > 0) {
+        addBtn.disabled = false;
+        addBtn.textContent = "Add to Cart";
+        addBtn.style.backgroundColor = "black";
+        addBtn.style.cursor = "pointer";
+      } else {
+        addBtn.disabled = true;
+        addBtn.textContent = "Out of Stock";
+        // This case usually prevented by UI blocking click, but good safety
+      }
+    }
+
+    function updateStockUI(qty) {
+      if (qty <= 0) {
+        stockDisplay.innerHTML = `<span style="color: #c00; font-weight: 600;">Out of Stock</span>`;
+      } else if (qty < 5) {
+        stockDisplay.innerHTML = `<span style="color: #c80; font-weight: 600;">Only ${qty} left!</span>`;
+      } else {
+        stockDisplay.innerHTML = `<span style="color: #0a0; font-weight: 600;">In Stock (${qty})</span>`;
+      }
     }
   } catch (error) {
     console.error("Error loading product:", error);
-    titleEl.textContent = "Product Not Found";
-    descEl.textContent =
-      "We couldn't load this product. Please try again later.";
+    titleEl.textContent = "Product Error";
+    descEl.textContent = "Could not load product details.";
     addBtn.disabled = true;
   }
 });

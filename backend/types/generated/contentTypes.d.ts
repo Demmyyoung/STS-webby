@@ -487,6 +487,37 @@ export interface ApiIdontKnowWhatImDoingIdontKnowWhatImDoing
   };
 }
 
+export interface ApiProductVarientProductVarient
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'product_varients';
+  info: {
+    displayName: 'product-varient';
+    pluralName: 'product-varients';
+    singularName: 'product-varient';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product-varient.product-varient'
+    > &
+      Schema.Attribute.Private;
+    product: Schema.Attribute.Relation<'manyToOne', 'api::product.product'>;
+    publishedAt: Schema.Attribute.DateTime;
+    quantity: Schema.Attribute.Integer;
+    size: Schema.Attribute.Enumeration<['xs', 's', 'm', 'l', 'xl', 'xxl']>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   collectionName: 'products';
   info: {
@@ -510,13 +541,15 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
     price: Schema.Attribute.Float;
+    product_varients: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product-varient.product-varient'
+    >;
     productimage: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
     >;
     publishedAt: Schema.Attribute.DateTime;
-    quantity: Schema.Attribute.Integer;
-    size: Schema.Attribute.Enumeration<['xs', 's', 'm', 'l', 'xl', 'xxl']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1035,6 +1068,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::coming-soon.coming-soon': ApiComingSoonComingSoon;
       'api::idont-know-what-im-doing.idont-know-what-im-doing': ApiIdontKnowWhatImDoingIdontKnowWhatImDoing;
+      'api::product-varient.product-varient': ApiProductVarientProductVarient;
       'api::product.product': ApiProductProduct;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
