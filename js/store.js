@@ -1,5 +1,6 @@
 // API URL - change localhost to your production URL when deploying
-const API_URL = "https://dynamic-addition-ee01c0a27a.strapiapp.com";
+// const API_URL = "https://dynamic-addition-ee01c0a27a.strapiapp.com";
+const API_URL = "http://localhost:1337";
 
 // Start fetching immediately (Eager Fetch)
 // This kicks off the network request before the DOM is even ready

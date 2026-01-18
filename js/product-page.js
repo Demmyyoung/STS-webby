@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (error) {
     console.error("Error loading product:", error);
     titleEl.textContent = "Product Error";
-    descEl.textContent = "Could not load product details.";
+    descEl.textContent = `Could not load product details. Error: ${error.message}`;
     addBtn.disabled = true;
   }
 });
