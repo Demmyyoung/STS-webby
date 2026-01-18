@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const params = new URLSearchParams(window.location.search);
   const productId = params.get("id");
 
-  // const API_URL = "https://dynamic-addition-ee01c0a27a.strapiapp.com";
-  const API_URL = "http://localhost:1337";
+  // const API_URL = "http://localhost:1337";
+  const API_URL = "https://dynamic-addition-ee01c0a27a.strapiapp.com";
   const mainImg = document.getElementById("main-product-img");
   const titleEl = document.getElementById("product-title");
   const priceEl = document.getElementById("product-price");
@@ -80,8 +80,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (!productData) throw new Error("No data");
 
+    // Helper to extract attributes (v4 vs v5)
+    // Strapi 5 often returns top level, Strapi 4 returns .attributes
     const attrs = productData.attributes ? productData.attributes : productData;
-    console.log("Product Attributes:", attrs);
+    console.log("FULL PRODUCT ATTRIBUTES:", attrs);
+    console.log("Available Keys:", Object.keys(attrs));
+
+    // Check specifically for variants
+    if (attrs.product_varients)
+      console.log("Found product_varients:", attrs.product_varients);
+    else if (attrs.productVarients)
+      console.log("Found productVarients:", attrs.productVarients);
+    else console.warn("NO VARIANTS FIELD FOUND IN DATA!");
 
     // Extract Basic Info
     const name = attrs.Name || attrs.name || attrs.Title || "Unknown Product";
