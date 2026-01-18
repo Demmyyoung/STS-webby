@@ -209,26 +209,17 @@
                 <h1 class="product-title" id="product-title">Loading...</h1>
                 <div class="product-price-lg" id="product-price">--</div>
 
-                <div class="size-selector-container">
-                    <span class="size-label">Select Size</span>
-                    <div class="size-options">
-                        <label>
-                            <input type="radio" name="size" value="S" class="size-option-input">
-                            <span class="size-option">S</span>
-                        </label>
-                        <label>
-                            <input type="radio" name="size" value="M" class="size-option-input">
-                            <span class="size-option">M</span>
-                        </label>
-                        <label>
-                            <input type="radio" name="size" value="L" class="size-option-input">
-                            <span class="size-option">L</span>
-                        </label>
-                        <label>
-                            <input type="radio" name="size" value="XL" class="size-option-input">
-                            <span class="size-option">XL</span>
-                        </label>
+                <div class="size-selector-container" id="size-container" style="display: none;">
+                    <span class="size-label">Size</span>
+                    <div class="size-options" id="size-options-wrapper">
+                        <!-- Dynamic Size Option will go here -->
                     </div>
+                </div>
+
+                <!-- Stock Quantity Display -->
+                <div id="stock-display"
+                    style="margin-top: 15px; font-family: 'Segoe UI', sans-serif; font-size: 0.9rem; color: #444;">
+                    <!-- Stock status will go here -->
                 </div>
 
                 <p class="product-desc" id="product-desc"></p>

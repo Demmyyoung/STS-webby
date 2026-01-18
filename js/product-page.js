@@ -16,17 +16,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   let currentProduct = null;
   let selectedSize = null;
 
-  // Handle Size Selection
-  sizeInputs.forEach((input) => {
-    input.addEventListener("change", (e) => {
-      selectedSize = e.target.value;
-      // Enable button if product is loaded
-      if (currentProduct) {
-        addBtn.disabled = false;
-        addBtn.textContent = "Add to Cart";
-      }
-    });
-  });
+  // Handle Size Selection (Legacy code removed - logic now handled in data fetch)
+  // Since we now have a single size per product entry, we pre-select it in the fetch logic.
 
   // Handle Add to Cart
   addBtn.addEventListener("click", () => {
@@ -72,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Fetch specific product by ID
     // Note: Strapi findOne usually requires /api/products/ID
     const response = await fetch(
-      `${API_URL}/api/products/${productId}?populate=*`
+      `${API_URL}/api/products/${productId}?populate=*`,
     );
 
     if (!response.ok) throw new Error("Product not found");
@@ -93,6 +84,52 @@ document.addEventListener("DOMContentLoaded", async () => {
     let price = "0.00";
     let rawPrice = attrs.Price !== undefined ? attrs.Price : attrs.price;
     if (rawPrice !== undefined) price = parseFloat(rawPrice).toFixed(2);
+
+    // Quantity & Size Handling
+    const quantity =
+      attrs.Quantity !== undefined ? attrs.Quantity : attrs.quantity;
+    const size = attrs.Size || attrs.size;
+
+    console.log("Stock Info - Quantity:", quantity, "Size:", size);
+
+    // Render Size if available
+    const sizeContainer = document.getElementById("size-container");
+    const sizeWrapper = document.getElementById("size-options-wrapper");
+
+    // Reset selected size logic
+    selectedSize = null;
+
+    if (size) {
+      sizeContainer.style.display = "block";
+      // Create a single immutable size option
+      sizeWrapper.innerHTML = `
+            <div class="size-option" style="background-color: #000; color: #fff; border-color: #000; cursor: default;">
+                ${size.toUpperCase()}
+            </div>
+        `;
+      selectedSize = size.toUpperCase(); // Auto-select the only available size
+    } else {
+      sizeContainer.style.display = "none";
+      selectedSize = "ONE SIZE"; // Default if no size specified
+    }
+
+    // Render Stock Status
+    const stockDisplay = document.getElementById("stock-display");
+    let isOutOfStock = false;
+
+    if (quantity !== undefined && quantity !== null) {
+      if (quantity <= 0) {
+        stockDisplay.innerHTML = `<span style="color: #c00; font-weight: 600;">Out of Stock</span>`;
+        isOutOfStock = true;
+      } else if (quantity < 5) {
+        stockDisplay.innerHTML = `<span style="color: #c80; font-weight: 600;">Only ${quantity} left in stock!</span>`;
+      } else {
+        stockDisplay.innerHTML = `<span style="color: #0a0; font-weight: 600;">In Stock (${quantity})</span>`;
+      }
+    } else {
+      // Fallback if quantity field is missing in data
+      stockDisplay.innerHTML = "";
+    }
 
     let description = attrs.Description || attrs.description || "";
     // Handle Rich Text (Blocks)
@@ -180,6 +217,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       price: parseFloat(price),
       image: imageUrl,
     };
+
+    // Update Button State
+    if (isOutOfStock) {
+      addBtn.disabled = true;
+      addBtn.textContent = "Out of Stock";
+      addBtn.style.backgroundColor = "#ccc";
+      addBtn.style.cursor = "not-allowed";
+    } else {
+      addBtn.disabled = false;
+      addBtn.textContent = "Add to Cart";
+      addBtn.style.backgroundColor = "black";
+      addBtn.style.cursor = "pointer";
+    }
   } catch (error) {
     console.error("Error loading product:", error);
     titleEl.textContent = "Product Not Found";

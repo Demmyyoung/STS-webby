@@ -515,7 +515,8 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       true
     >;
     publishedAt: Schema.Attribute.DateTime;
-    Size: Schema.Attribute.Enumeration<['XS', 'S', 'M', 'L', 'XL']>;
+    quantity: Schema.Attribute.Integer;
+    size: Schema.Attribute.Enumeration<['xs', 's', 'm', 'l', 'xl', 'xxl']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

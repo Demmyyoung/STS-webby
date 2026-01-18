@@ -30,14 +30,18 @@
         "audios"
       ]
     },
-    "Size": {
+    "quantity": {
+      "type": "integer"
+    },
+    "size": {
       "type": "enumeration",
       "enum": [
-        "XS",
-        "S",
-        "M",
-        "L",
-        "XL"
+        "xs",
+        "s",
+        "m",
+        "l",
+        "xl",
+        "xxl"
       ]
     }
   }
