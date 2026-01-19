@@ -152,6 +152,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     mainImg.alt = name;
     document.title = `${name} | SINNER TO SAINTS`;
 
+    // Update SEO Meta Tags
+    document.getElementById("og-title").content = `${name} | SINNER TO SAINTS`;
+    document.getElementById("og-desc").content =
+      description.substring(0, 150) + (description.length > 150 ? "..." : "");
+    document.getElementById("og-image").content = imageUrl;
+    document.getElementById("og-url").content = window.location.href;
+
     currentProduct = {
       id: productData.id,
       name: name,
@@ -161,13 +168,46 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // --- VARIANT & SIZE LOGIC ---
     let variants = [];
-    const rawVariants = attrs.product_varients || attrs.productVarients; // Check casing from schema
 
-    if (rawVariants && rawVariants.data && rawVariants.data.length > 0) {
-      variants = rawVariants.data.map((v) => ({
-        id: v.id,
-        ...v.attributes,
-      }));
+    // Robust extraction: Check all likely casing/spelling variations
+    // The user mentioned "product-varient", Strapi often sanitizes to "product_varients" or "product_variants"
+    const potentialKeys = [
+      "product_variants",
+      "product_varients",
+      "productVariants",
+      "productVarients",
+      "product_variant",
+      "product_varient",
+      "product-variant",
+      "product-varient",
+      "variants",
+      "varients",
+    ];
+
+    let rawVariants = null;
+    for (const key of potentialKeys) {
+      if (attrs[key]) {
+        console.log(`Found variants under key: ${key}`);
+        rawVariants = attrs[key];
+        break;
+      }
+    }
+
+    if (rawVariants) {
+      // Handle "Relation" structure (has .data array)
+      if (rawVariants.data && Array.isArray(rawVariants.data)) {
+        variants = rawVariants.data.map((v) => ({
+          id: v.id,
+          ...v.attributes,
+        }));
+      }
+      // Handle "Component" or "Dynamic Zone" structure (direct array)
+      else if (Array.isArray(rawVariants)) {
+        variants = rawVariants.map((v) => ({
+          id: v.id,
+          ...v, // Components usually have properties directly
+        }));
+      }
     }
 
     console.log("Parsed Variants:", variants);
