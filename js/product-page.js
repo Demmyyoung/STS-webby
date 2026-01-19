@@ -48,12 +48,25 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (window.addToCart) {
       window.addToCart(cartItem);
+
+      // VISUAL ONLY: Decrement stock
+      selectedVariant.quantity -= 1;
+      updateStockUI(selectedVariant.quantity);
+
       const originalText = addBtn.textContent;
       addBtn.textContent = "Added!";
       addBtn.disabled = true;
+
+      // If still has stock, re-enable after delay
+      // If out of stock, leave disabled (handled by updateStockUI logic technically, but let's be safe)
       setTimeout(() => {
-        addBtn.textContent = originalText;
-        addBtn.disabled = false;
+        if (selectedVariant.quantity > 0) {
+          addBtn.textContent = originalText;
+          addBtn.disabled = false;
+        } else {
+          addBtn.textContent = "Out of Stock";
+          addBtn.disabled = true;
+        }
       }, 2000);
     } else {
       console.error("addToCart function not found!");

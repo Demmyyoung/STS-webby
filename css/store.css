@@ -118,8 +118,14 @@
   .product-grid {
     /* Allow 2 columns on mobile by reducing min size */
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    gap: 15px; /* Increase gap slightly if needed, but 15px is standard */
     padding: 0 15px 60px;
+  }
+
+  .product-details {
+    flex-direction: column; /* Stack name and price on mobile to prevent overlap */
+    align-items: flex-start;
+    gap: 5px;
   }
 
   .product-title {
@@ -128,13 +134,14 @@
 }
 
 @media (max-width: 480px) {
-  /* For very small screens, maybe stack them if preferred, 
-       but 2-column is standard for modern e-commerce. 
-       Let's stick to 2 columns but ensure text fits */
+  .product-grid {
+    gap: 10px; /* Tighter gap on very small screens */
+  }
+
   .product-name {
-    font-size: 1rem;
+    font-size: 0.9rem; /* Smaller font to fit */
   }
   .product-price {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 }
