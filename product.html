@@ -16,6 +16,7 @@
 
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/store.css">
+    <link rel="stylesheet" href="./css/skeleton.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap"
@@ -208,14 +209,18 @@
         <main class="product-page-container">
             <!-- Left: Image -->
             <div class="product-image-section">
+                <!-- Skeleton Image -->
+                <div id="main-product-img-skeleton" class="skeleton skeleton-img"></div>
                 <!-- Image filled by JS -->
-                <img id="main-product-img" src="" alt="Loading...">
+                <img id="main-product-img" src="" alt="Loading..." style="display: none;">
             </div>
 
             <!-- Right: Details -->
             <div class="product-info-section">
-                <h1 class="product-title" id="product-title">Loading...</h1>
-                <div class="product-price-lg" id="product-price">--</div>
+                <h1 class="product-title skeleton" id="product-title">Loading...</h1>
+                <div class="product-price-lg skeleton" id="product-price">--</div>
+
+                <div class="size-selector-container skeleton" id="size-skeleton"></div>
 
                 <div class="size-selector-container" id="size-container" style="display: none;">
                     <span class="size-label">Size</span>

@@ -16,6 +16,25 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Check if we are on the store page and if the grid exists
   if (!productGrid) return;
 
+  // Render Skeleton Grid for Store Page (6 items)
+  productGrid.innerHTML = "";
+  for (let i = 0; i < 6; i++) {
+    const skel = document.createElement("div");
+    skel.classList.add("product-card");
+    skel.style.pointerEvents = "none";
+    skel.innerHTML = `
+          <div class="product-image-wrapper">
+              <div class="skeleton skeleton-img" style="height: 300px;"></div>
+          </div>
+          <div class="product-details">
+              <h3 class="product-name skeleton skeleton-text" style="width: 80%; margin: 10px auto;"></h3>
+              <span class="product-price skeleton skeleton-text" style="width: 40%; display: block; margin: 0 auto;"></span>
+          </div>
+          <div class="add-to-cart-btn skeleton skeleton-btn" style="margin-top: 10px;"></div>
+      `;
+    productGrid.appendChild(skel);
+  }
+
   try {
     // Await the promise we started earlier
     const payload = await productsPromise;

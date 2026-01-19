@@ -129,7 +129,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Render Basic Info
     titleEl.textContent = name;
+    titleEl.classList.remove("skeleton");
+
     priceEl.textContent = `₦${price}`;
+    priceEl.classList.remove("skeleton");
+
+    // Remove size skeleton
+    const sizeSkeleton = document.getElementById("size-skeleton");
+    if (sizeSkeleton) sizeSkeleton.style.display = "none";
 
     // Description
     let description = attrs.Description || attrs.description || "";
@@ -150,14 +157,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     mainImg.src = imageUrl;
     mainImg.alt = name;
+    mainImg.onload = () => {
+      mainImg.style.display = "block";
+      const imgSkeleton = document.getElementById("main-product-img-skeleton");
+      if (imgSkeleton) imgSkeleton.style.display = "none";
+    };
     document.title = `${name} | SINNER TO SAINTS`;
 
-    // Update SEO Meta Tags
-    document.getElementById("og-title").content = `${name} | SINNER TO SAINTS`;
-    document.getElementById("og-desc").content =
-      description.substring(0, 150) + (description.length > 150 ? "..." : "");
-    document.getElementById("og-image").content = imageUrl;
-    document.getElementById("og-url").content = window.location.href;
+    // Update SEO Meta Tags (Safe check)
+    const setMeta = (id, content) => {
+      const el = document.getElementById(id);
+      if (el) el.content = content;
+    };
+
+    setMeta("og-title", `${name} | SINNER TO SAINTS`);
+    setMeta(
+      "og-desc",
+      description.substring(0, 150) + (description.length > 150 ? "..." : ""),
+    );
+    setMeta("og-image", imageUrl);
+    setMeta("og-url", window.location.href);
 
     currentProduct = {
       id: productData.id,

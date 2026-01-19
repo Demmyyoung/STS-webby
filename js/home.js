@@ -18,6 +18,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Check if we are on the home page and if the grid exists
   if (!featuredGrid) return;
 
+  // Render Skeleton Loading State for Home Page
+  featuredGrid.innerHTML = "";
+  for (let i = 0; i < 3; i++) {
+    const skel = document.createElement("div");
+    skel.className = "featured-item";
+    skel.style.pointerEvents = "none";
+    skel.innerHTML = `
+        <div class="featured-img-wrap skeleton skeleton-img"></div>
+        <div class="featured-info">
+            <h3 class="skeleton skeleton-text" style="width: 80%;"></h3>
+            <span class="skeleton skeleton-text" style="width: 40%; display: block;"></span>
+        </div>
+    `;
+    featuredGrid.appendChild(skel);
+  }
+
   try {
     const payload = await featuredPromise;
 
@@ -35,7 +51,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const shuffled = [...products].sort(() => 0.5 - Math.random());
       const selectedProducts = shuffled.slice(0, 3);
 
-      featuredGrid.innerHTML = ""; // Clear hardcoded items
+      featuredGrid.innerHTML = ""; // Clear skeletons
 
       selectedProducts.forEach((product) => {
         // Handle Strapi v4 (attributes nested) vs v5 (often flat)
