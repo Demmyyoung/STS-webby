@@ -296,50 +296,50 @@
                 onClose: function () {
                     alert('Window closed.');
                 },
-                callback: async function (response) {
+                callback: function (response) {
                     // Payment successful. Now update stock in Strapi.
-                    // Note: In production, this should be done via Webbook to avoid client-side manipulation.
-                    // But for this project, we call the backend from here.
 
-                    const cart = getCart(); // Get items again
-                    const API_URL = "https://dynamic-addition-ee01c0a27a.strapiapp.com";
+                    // define async handler inside
+                    const handleSuccess = async () => {
+                        const cart = getCart(); // Get items again
+                        const API_URL = "https://dynamic-addition-ee01c0a27a.strapiapp.com";
 
-                    // We need to loop through items and decrement
-                    // Since a user might buy multiple different sizes of same product
-                    // Variant ID is key.
-
-                    for (const item of cart) {
-                        try {
-                            if (item.variantId && item.variantId !== 'default') {
-                                // Call our custom endpoint
-                                await fetch(`${API_URL}/api/product-varients/decrement`, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                        id: item.variantId
-                                    })
-                                });
+                        // Loop through items and decrement
+                        for (const item of cart) {
+                            try {
+                                if (item.variantId && item.variantId !== 'default') {
+                                    await fetch(`${API_URL}/api/product-varients/decrement`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            id: item.variantId
+                                        })
+                                    });
+                                }
+                            } catch (err) {
+                                console.error("Failed to decrement stock for", item.name, err);
                             }
-                        } catch (err) {
-                            console.error("Failed to decrement stock for", item.name, err);
                         }
-                    }
 
-                    // Clear Cart
-                    localStorage.removeItem('sts_cart');
+                        // Clear Cart
+                        localStorage.removeItem('sts_cart');
 
-                    // Show success
-                    document.querySelector('.checkout-main').innerHTML = `
-                        <div style="text-align: center; padding: 40px;">
-                            <h1>Thank You!</h1>
-                            <p>Your order has been placed successfully.</p>
-                            <p>Reference: ${response.reference}</p>
-                            <a href="index.html" style="text-decoration: underline; color: black; margin-top: 20px; display: inline-block;">Back to Home</a>
-                        </div>
-                    `;
-                    updateCartCount();
+                        // Show success
+                        document.querySelector('.checkout-main').innerHTML = `
+                            <div style="text-align: center; padding: 40px;">
+                                <h1>Thank You!</h1>
+                                <p>Your order has been placed successfully.</p>
+                                <p>Reference: ${response.reference}</p>
+                                <a href="index.html" style="text-decoration: underline; color: black; margin-top: 20px; display: inline-block;">Back to Home</a>
+                            </div>
+                        `;
+                        updateCartCount();
+                    };
+
+                    // Execute the async handler
+                    handleSuccess();
                 }
             });
 
