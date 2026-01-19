@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             </div>
             <div class="featured-info">
                 <h3>${name}</h3>
-                <span>$${price}</span>
+                <span>₦${price}</span>
             </div>
         `;
 
