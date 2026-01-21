@@ -1,0 +1,35 @@
+/* --- Product Card Hover Effect --- */
+.product-image-wrapper {
+  position: relative;
+  overflow: hidden; /* Ensures images stay within bounds */
+}
+
+.product-img {
+  transition: opacity 0.5s ease;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hover-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Match the main image fit */
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none; /* Let clicks pass through if needed */
+  z-index: 2; /* Sit on top */
+}
+
+/* On hover, fade in the hover image */
+.product-card:hover .hover-img {
+  opacity: 1;
+}
+
+/* Optional: Fade out the main image slightly or completely if transparent pngs are used? 
+   No, usually keeping it visible underneath is safer for loading/flicker specific cases, 
+   unless the top image has transparency. Assuming solid JPGs for now. 
+*/

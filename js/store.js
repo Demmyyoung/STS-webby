@@ -130,6 +130,62 @@ document.addEventListener("DOMContentLoaded", async () => {
           }
         }
 
+        // Hover Image Handling
+        let hoverImageUrl = null;
+
+        // 1. Try to get it from a specific "HoverImage" field
+        const hoverImgData =
+          attrs.HoverImage || attrs.hoverImage || attrs.hoverimage;
+        if (hoverImgData) {
+          let hImgObj = null;
+          if (Array.isArray(hoverImgData)) {
+            hImgObj = hoverImgData[0];
+          } else if (hoverImgData.data) {
+            hImgObj = Array.isArray(hoverImgData.data)
+              ? hoverImgData.data[0]
+              : hoverImgData.data;
+          } else {
+            hImgObj = hoverImgData;
+          }
+
+          if (hImgObj) {
+            const hImgAttrs = hImgObj.attributes || hImgObj;
+            if (hImgAttrs.url) {
+              hoverImageUrl = hImgAttrs.url.startsWith("http")
+                ? hImgAttrs.url
+                : `${API_URL}${hImgAttrs.url}`;
+            } else if (hImgAttrs.formats?.medium?.url) {
+              hoverImageUrl = hImgAttrs.formats.medium.url.startsWith("http")
+                ? hImgAttrs.formats.medium.url
+                : `${API_URL}${hImgAttrs.formats.medium.url}`;
+            }
+          }
+        }
+
+        // 2. If no specific field, check if ProductImage has a second image
+        if (!hoverImageUrl && imgData) {
+          // We need the raw array/collection to see if there is a 2nd item
+          // Re-evaluating imgData based on potential structure
+          let allImages = [];
+
+          if (Array.isArray(imgData)) {
+            allImages = imgData;
+          } else if (imgData.data && Array.isArray(imgData.data)) {
+            allImages = imgData.data;
+          }
+
+          // If we found more than 1 image, use the second one
+          if (allImages.length > 1) {
+            const secondImg = allImages[1];
+            const sImgAttrs = secondImg.attributes || secondImg;
+            if (sImgAttrs.url) {
+              hoverImageUrl = sImgAttrs.url.startsWith("http")
+                ? sImgAttrs.url
+                : `${API_URL}${sImgAttrs.url}`;
+            }
+          }
+        }
+
         // Create Product Card HTML
         const card = document.createElement("div");
         card.classList.add("product-card");
@@ -159,6 +215,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         card.innerHTML = `
               <div class="product-image-wrapper">
                   <img src="${imageUrl}" alt="${name}" class="product-img">
+                  ${hoverImageUrl ? `<img src="${hoverImageUrl}" alt="${name} Hover" class="hover-img">` : ""}
               </div>
               <div class="product-details">
                   <h3 class="product-name">${name}</h3>
