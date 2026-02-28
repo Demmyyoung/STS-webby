@@ -259,7 +259,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       // No products found or empty list
       productGrid.innerHTML = `
           <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
-              <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 15px;">Coming Soon...</h2>
+              <h2 style="font-family: 'Anton', sans-serif; font-size: 2rem; margin-bottom: 15px; text-transform: uppercase;">Coming Soon...</h2>
               <p style="color: #888; font-size: 1.1rem;">Our store is currently being updated. Stay tuned.</p>
           </div>
       `;
@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Display Coming Soon on error
     productGrid.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
-            <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 15px;">Coming Soon...</h2>
+            <h2 style="font-family: 'Anton', sans-serif; font-size: 2rem; margin-bottom: 15px; text-transform: uppercase;">Coming Soon...</h2>
             <p style="color: #888; font-size: 1.1rem;">Our store is currently being updated. Stay tuned.</p>
         </div>
     `;

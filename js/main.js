@@ -237,3 +237,90 @@ if (typeof Lenis !== "undefined") {
 } else {
   console.warn("Lenis not loaded");
 }
+// --- Dark Mode Logic ---
+// --- Dark Mode Logic ---
+// --- Dark Mode Logic ---
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Dark Mode Logic: Initializing...");
+  const themeToggle = document.querySelector(".theme-toggle");
+  const body = document.body;
+
+  // Assets to swap
+  const logoImg = document.querySelector(".logo-image");
+  const heroImg = document.querySelector(".hero-bg img");
+
+  // Paths (adjust based on your file structure)
+  const assets = {
+    whiteLogo: "./img/Recycle white.jpg",
+    blackLogo: "./img/Recycle black.jpg",
+    whiteHero: "./img/Floating white.jpg",
+    blackHero: "./img/Floating black.jpg",
+  };
+
+  function updateAssets(isDark) {
+    // Paths to new images
+    const newLogoSrc = isDark ? assets.whiteLogo : assets.blackLogo;
+    const newHeroSrc = isDark ? assets.blackHero : assets.whiteHero;
+
+    const swapImage = (imgElement, newSrc) => {
+      if (!imgElement || imgElement.src.includes(newSrc)) return;
+
+      // Add transition class if not present
+      if (!imgElement.classList.contains("fade-transition")) {
+        imgElement.classList.add("fade-transition");
+      }
+
+      // Fade Out
+      imgElement.classList.add("fade-out");
+
+      // Wait for fade out, then swap and fade in
+      setTimeout(() => {
+        imgElement.src = newSrc;
+        imgElement.onload = () => {
+          imgElement.classList.remove("fade-out");
+        };
+        // Fallback in case onload doesn't fire (cached)
+        setTimeout(() => imgElement.classList.remove("fade-out"), 50);
+      }, 400); // Match CSS transition duration
+    };
+
+    if (logoImg) swapImage(logoImg, newLogoSrc);
+    if (heroImg) swapImage(heroImg, newHeroSrc);
+  }
+
+  // Check localStorage usage
+  const savedTheme = localStorage.getItem("theme");
+  console.log("Saved theme:", savedTheme);
+
+  // Initial Apply
+  if (savedTheme === "dark") {
+    body.classList.add("dark-mode");
+    updateAssets(true);
+    console.log("Applied dark mode from storage");
+  } else {
+    updateAssets(false);
+  }
+
+  if (themeToggle) {
+    console.log("Theme toggle button found");
+    themeToggle.addEventListener("click", () => {
+      console.log("Toggle clicked");
+      body.classList.toggle("dark-mode");
+      const isDark = body.classList.contains("dark-mode");
+
+      // Update Assets
+      updateAssets(isDark);
+
+      // Save preference
+      if (isDark) {
+        localStorage.setItem("theme", "dark");
+        console.log("Theme set to dark");
+      } else {
+        localStorage.setItem("theme", "light");
+        console.log("Theme set to light");
+      }
+    });
+  } else {
+    console.warn("Theme toggle button not found");
+  }
+});

@@ -17,8 +17,9 @@
 }
 
 .about-title {
+  font-family: "Anton", sans-serif;
   font-size: 4rem;
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-bottom: 20px;

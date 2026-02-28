@@ -112,8 +112,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     let rawPrice = attrs.Price !== undefined ? attrs.Price : attrs.price;
     if (rawPrice !== undefined) price = parseFloat(rawPrice).toFixed(2);
 
-    // Image Handling
+    // Image Handling - Extract ALL images for gallery
     let imageUrl = "./img/Recycle black.jpg";
+    let allImageUrls = []; // Store all image URLs for gallery
+
     const imgField =
       attrs.ProductImage ||
       attrs.productImage ||
@@ -122,23 +124,69 @@ document.addEventListener("DOMContentLoaded", async () => {
       attrs.image;
 
     if (imgField) {
-      let imgObj = null;
-      if (Array.isArray(imgField)) imgObj = imgField[0];
-      else if (imgField.data) {
-        imgObj = Array.isArray(imgField.data)
-          ? imgField.data[0]
-          : imgField.data;
-      } else imgObj = imgField;
+      // Normalize to array of image objects
+      let imgArray = [];
 
-      if (imgObj) {
-        const imgAttrs = imgObj.attributes ? imgObj.attributes : imgObj;
-        if (imgAttrs.url) {
-          imageUrl = imgAttrs.url.startsWith("http")
-            ? imgAttrs.url
-            : `${API_URL}${imgAttrs.url}`;
+      if (Array.isArray(imgField)) {
+        imgArray = imgField;
+      } else if (imgField.data) {
+        imgArray = Array.isArray(imgField.data)
+          ? imgField.data
+          : [imgField.data];
+      } else {
+        imgArray = [imgField];
+      }
+
+      // Extract URLs from all images
+      imgArray.forEach((imgObj) => {
+        if (imgObj) {
+          const imgAttrs = imgObj.attributes ? imgObj.attributes : imgObj;
+          if (imgAttrs.url) {
+            const url = imgAttrs.url.startsWith("http")
+              ? imgAttrs.url
+              : `${API_URL}${imgAttrs.url}`;
+            allImageUrls.push(url);
+          }
+        }
+      });
+
+      // Set first image as main image
+      if (allImageUrls.length > 0) {
+        imageUrl = allImageUrls[0];
+      }
+    }
+
+    // Also check HoverImage field (might have back image separately)
+    const hoverImgField =
+      attrs.HoverImage || attrs.hoverImage || attrs.hoverimage;
+
+    if (hoverImgField) {
+      let hImgObj = null;
+      if (Array.isArray(hoverImgField)) {
+        hImgObj = hoverImgField[0];
+      } else if (hoverImgField.data) {
+        hImgObj = Array.isArray(hoverImgField.data)
+          ? hoverImgField.data[0]
+          : hoverImgField.data;
+      } else {
+        hImgObj = hoverImgField;
+      }
+
+      if (hImgObj) {
+        const hImgAttrs = hImgObj.attributes || hImgObj;
+        if (hImgAttrs.url) {
+          const hoverUrl = hImgAttrs.url.startsWith("http")
+            ? hImgAttrs.url
+            : `${API_URL}${hImgAttrs.url}`;
+          // Add hover image if not already in array
+          if (!allImageUrls.includes(hoverUrl)) {
+            allImageUrls.push(hoverUrl);
+          }
         }
       }
     }
+
+    console.log("All Product Images:", allImageUrls);
 
     // Render Basic Info
     titleEl.textContent = name;
@@ -175,6 +223,38 @@ document.addEventListener("DOMContentLoaded", async () => {
       const imgSkeleton = document.getElementById("main-product-img-skeleton");
       if (imgSkeleton) imgSkeleton.style.display = "none";
     };
+
+    // Create Thumbnail Gallery (if more than 1 image)
+    const thumbnailGallery = document.getElementById("thumbnail-gallery");
+    if (thumbnailGallery && allImageUrls.length > 1) {
+      thumbnailGallery.innerHTML = ""; // Clear any existing
+
+      allImageUrls.forEach((url, index) => {
+        const thumb = document.createElement("div");
+        thumb.classList.add("thumbnail");
+        if (index === 0) thumb.classList.add("active"); // First is active by default
+
+        const thumbImg = document.createElement("img");
+        thumbImg.src = url;
+        thumbImg.alt = `${name} - View ${index + 1}`;
+
+        thumb.appendChild(thumbImg);
+
+        // Click handler to switch main image
+        thumb.addEventListener("click", () => {
+          // Update main image
+          mainImg.src = url;
+
+          // Update active state on thumbnails
+          document
+            .querySelectorAll(".thumbnail")
+            .forEach((t) => t.classList.remove("active"));
+          thumb.classList.add("active");
+        });
+
+        thumbnailGallery.appendChild(thumb);
+      });
+    }
     document.title = `${name} | SINNER TO SAINTS`;
 
     // Update SEO Meta Tags (Safe check)

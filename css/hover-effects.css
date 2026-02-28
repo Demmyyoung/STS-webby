@@ -4,12 +4,8 @@
   overflow: hidden; /* Ensures images stay within bounds */
 }
 
-.product-img {
-  transition: opacity 0.5s ease;
-  width: 100%;
-  height: auto;
-  display: block;
-}
+/* Remove conflicting .product-img styles that override store.css */
+/* .product-img rule removed to let store.css handle dimensions and fit */
 
 .hover-img {
   position: absolute;
@@ -19,14 +15,18 @@
   height: 100%;
   object-fit: cover; /* Match the main image fit */
   opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none; /* Let clicks pass through if needed */
-  z-index: 2; /* Sit on top */
+  /* Match the transform transition from store.css */
+  transition:
+    opacity 0.5s ease,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 2;
 }
 
-/* On hover, fade in the hover image */
+/* On hover, fade in AND scale the hover image */
 .product-card:hover .hover-img {
   opacity: 1;
+  transform: scale(1.03);
 }
 
 /* Optional: Fade out the main image slightly or completely if transparent pngs are used? 

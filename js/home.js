@@ -150,7 +150,7 @@ function renderComingSoon(container) {
   container.style.justifyContent = "center";
   container.innerHTML = `
         <div style="text-align: center; padding: 40px 20px; width: 100%;">
-            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 10px;">Coming Soon...</h3>
+            <h3 style="font-family: 'Anton', sans-serif; font-size: 1.5rem; margin-bottom: 10px; text-transform: uppercase;">Coming Soon...</h3>
             <p style="color: #888; font-size: 1rem;">Fresh drops are on the way.</p>
         </div>
     `;
