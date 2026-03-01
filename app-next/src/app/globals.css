@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;900&display=swap");
+@import "../css/style.css";
+@import "../css/store.css";
+@import "../css/hover-effects.css";
+@import "../css/skeleton.css";
+@import "../css/about.css";
+
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Force Logo Size over Next Image constraints */
+.logo-image,
+.logo-link img {
+  width: 100% !important;
+  max-width: 160px !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  mix-blend-mode: darken !important;
+}
+
+/* --- Product Page Specific Styles ported from old product.html --- */
+.product-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 180px 40px 100px; /* Top padding for header */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  min-height: 80vh;
+  align-items: start;
+}
+
+.product-image-section {
+  width: 100%;
+}
+
+.add-btn:disabled {
+  background: #ccc !important;
+  cursor: not-allowed !important;
+  opacity: 1 !important;
+  color: #777 !important;
+}
+
+@media screen and (max-width: 900px) {
+  .product-page-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 160px 20px 40px;
+  }
+  .product-title {
+    font-size: 2rem;
+  }
+  .product-image-wrapper {
+    max-height: 50vh !important;
+  }
+}

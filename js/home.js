@@ -13,25 +13,31 @@ const featuredPromise = fetch(`${API_URL}/api/products?populate=*`)
   });
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const featuredGrid = document.querySelector(".featured-grid");
+  const verticalGrid = document.querySelector(".vertical-grid");
 
   // Check if we are on the home page and if the grid exists
-  if (!featuredGrid) return;
+  if (!verticalGrid) return;
 
   // Render Skeleton Loading State for Home Page
-  featuredGrid.innerHTML = "";
+  verticalGrid.innerHTML = "";
   for (let i = 0; i < 3; i++) {
-    const skel = document.createElement("div");
-    skel.className = "featured-item";
-    skel.style.pointerEvents = "none";
-    skel.innerHTML = `
-        <div class="featured-img-wrap skeleton skeleton-img"></div>
-        <div class="featured-info">
-            <h3 class="skeleton skeleton-text" style="width: 80%;"></h3>
-            <span class="skeleton skeleton-text" style="width: 40%; display: block;"></span>
+    const skelColumn = document.createElement("div");
+    skelColumn.className = "vertical-column brutal-card";
+    skelColumn.innerHTML = `
+        <div class="column-header">
+            <span class="skeleton skeleton-text" style="width: 40%;"></span>
+        </div>
+        <div class="column-body">
+            <h3 class="column-title skeleton skeleton-text" style="width: 70%; margin-bottom: 25px;"></h3>
+            <div class="skeleton skeleton-img brutal-card" style="width: 100%; aspect-ratio: 1; border-radius: 0;"></div>
+            <ul class="checklist-ul" style="margin-top: 20px;">
+                <li class="skeleton skeleton-text" style="width: 80%;"></li>
+                <li class="skeleton skeleton-text" style="width: 60%;"></li>
+                <li class="skeleton skeleton-text" style="width: 70%;"></li>
+            </ul>
         </div>
     `;
-    featuredGrid.appendChild(skel);
+    verticalGrid.appendChild(skelColumn);
   }
 
   try {
@@ -39,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (!payload) {
       // Only if fetch totally failed and returned null
-      renderComingSoon(featuredGrid);
+      renderComingSoon(verticalGrid);
       return;
     }
 
@@ -51,9 +57,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       const shuffled = [...products].sort(() => 0.5 - Math.random());
       const selectedProducts = shuffled.slice(0, 3);
 
-      featuredGrid.innerHTML = ""; // Clear skeletons
+      verticalGrid.innerHTML = ""; // Clear skeletons
 
-      selectedProducts.forEach((product) => {
+      selectedProducts.forEach((product, index) => {
         // Handle Strapi v4 (attributes nested) vs v5 (often flat)
         const attrs = product.attributes ? product.attributes : product;
 
@@ -118,30 +124,43 @@ document.addEventListener("DOMContentLoaded", async () => {
           }
         }
 
-        // Create Featured Item HTML (Matching existing structure)
-        const link = document.createElement("a");
-        link.href = `product.html?id=${product.documentId || product.id}`;
-        link.classList.add("featured-item");
+        // Create Column HTML matches the new brutalist design pattern
+        const col = document.createElement("div");
+        col.className = "vertical-column brutal-card";
 
-        link.innerHTML = `
-            <div class="featured-img-wrap">
-                <img src="${imageUrl}" alt="${name}">
+        let headerIcon = "★";
+        if (index === 1) headerIcon = "♦";
+        if (index === 2) headerIcon = "✦";
+
+        col.innerHTML = `
+            <div class="column-header">
+                ${headerIcon} Drop 0${index + 1}
             </div>
-            <div class="featured-info">
-                <h3>${name}</h3>
-                <span>₦${price}</span>
+            <div class="column-body">
+                <h3 class="column-title">${name}</h3>
+                <a href="product.html?id=${product.documentId || product.id}" style="display: block; text-decoration: none; color: inherit;">
+                    <!-- Square Image Wrap imitating screenshot -->
+                    <div style="width: 100%; aspect-ratio: 1; border: 2px solid #000; overflow: hidden; background: white;">
+                        <img src="${imageUrl}" alt="${name}" style="width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    </div>
+                </a>
+                <ul class="checklist-ul">
+                    <li>Available Now</li>
+                    <li>₦${price}</li>
+                    <li><a href="product.html?id=${product.documentId || product.id}" style="color: black; font-weight: bold; text-decoration: underline;">View Details</a></li>
+                </ul>
             </div>
         `;
 
-        featuredGrid.appendChild(link);
+        verticalGrid.appendChild(col);
       });
     } else {
       // Valid response but no products
-      renderComingSoon(featuredGrid);
+      renderComingSoon(verticalGrid);
     }
   } catch (error) {
     console.error("Error fetching featured products:", error);
-    renderComingSoon(featuredGrid);
+    renderComingSoon(verticalGrid);
   }
 });
 

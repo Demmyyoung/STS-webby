@@ -13,7 +13,7 @@
         rel="stylesheet">
     <style>
         .checkout-main {
-            padding: 100px 20px 60px;
+            padding: 180px 20px 60px;
             max-width: 600px;
             margin: 0 auto;
             min-height: 60vh;
@@ -48,7 +48,7 @@
         .form-group input,
         .form-group textarea {
             padding: 10px;
-            border: 1px solid #ddd;
+            border: 2px solid black;
             font-family: inherit;
         }
 
@@ -108,8 +108,12 @@
         <img src="./img/Recycle black.jpg" style="width: 150px; height: auto; object-fit: contain;" alt="">
         <p class="wipe-quote"></p>
     </div>
-
     <div class="container">
+        <!-- Announcement Bar -->
+        <div class="announcement-bar" style="position: absolute; top: 88px; left: 0; width: 100%; z-index: 5;">
+            ✦ Season 01 drops are now live! <a href="store.html">Shop Collection &rarr;</a>
+        </div>
+
         <!-- Header -->
         <header class="header">
             <div class="logo-placeholder">
@@ -189,7 +193,7 @@
                     </div>
                 </div>
 
-                <div class="checkout-summary">
+                <div class="checkout-summary brutal-card" style="box-shadow: none; border-radius: 0;">
                     <h3 style="margin-top: 0;">Order Summary</h3>
                     <div id="order-items-list" style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
                         <!-- JS injected -->
@@ -201,7 +205,8 @@
                     </div>
                 </div>
 
-                <button type="submit" class="pay-btn">Pay Now</button>
+                <button type="submit" class="pay-btn brutal-btn" style="width: 100%; box-sizing: border-box;">Pay
+                    Now</button>
             </form>
         </main>
 

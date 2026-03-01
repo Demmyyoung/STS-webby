@@ -158,8 +158,6 @@ body {
 /* Hidden state: Wiped away to the RIGHT (Left edge moves to 100%) */
 .page-wipe.hidden {
   clip-path: inset(0 0 0 100%);
-  opacity: 0;
-  visibility: hidden;
   pointer-events: none;
 }
 
@@ -213,6 +211,8 @@ html {
   font-family: "Inter", sans-serif;
   font-size: 0.9rem;
   letter-spacing: 0.5px;
+  /* Add top padding to account for fixed header, or adjust layout */
+  margin-top: 88px; /* Height of header approx */
 }
 .announcement-bar a {
   color: #fff;
@@ -287,11 +287,10 @@ nav.open {
 
 /* Logo image sizing: keeps logo inside header and preserves aspect ratio */
 .logo-placeholder {
-  position: relative;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  width: 160px;
+  justify-content: center;
+  width: 48px;
   height: 48px;
 }
 

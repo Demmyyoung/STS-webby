@@ -26,7 +26,7 @@
         .product-page-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 120px 40px 100px;
+            padding: 180px 40px 100px;
             /* Top padding for header */
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -209,10 +209,14 @@
         <img src="./img/Recycle black.jpg" style="width: 150px; height: auto; object-fit: contain;" alt="">
         <p class="wipe-quote"></p>
     </div>
-
     <div class="container">
+        <!-- Announcement Bar -->
+        <div class="announcement-bar" style="position: absolute; top: 88px; left: 0; width: 100%; z-index: 5;">
+            ✦ Season 01 drops are now live! <a href="store.html">Shop Collection &rarr;</a>
+        </div>
+
         <!-- Header copied from index.html -->
-        <header class="header" style="position: absolute;">
+        <header class="header">
             <div class="logo-placeholder">
                 <a href="index.html" class="logo-link">
                     <img src="./img/Recycle white.jpg" alt="Sinner to Saints Logo" class="logo-image" id="logo-img">
@@ -262,7 +266,7 @@
         <main class="product-page-container">
             <!-- Left: Image -->
             <div class="product-image-section">
-                <div class="main-image-wrapper">
+                <div class="main-image-wrapper brutal-card" style="border-bottom: var(--brutal-border);">
                     <!-- Skeleton Image -->
                     <div id="main-product-img-skeleton" class="skeleton skeleton-img"></div>
                     <!-- Image filled by JS -->
@@ -294,7 +298,8 @@
 
                 <p class="product-desc" id="product-desc"></p>
 
-                <button id="add-to-cart-page-btn" class="add-btn">Add to Cart</button>
+                <button id="add-to-cart-page-btn" class="add-btn brutal-btn"
+                    style="width: 100%; box-sizing: border-box; text-align: center;">Add to Cart</button>
             </div>
         </main>
 

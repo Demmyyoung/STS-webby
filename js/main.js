@@ -248,6 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Assets to swap
   const logoImg = document.querySelector(".logo-image");
   const heroImg = document.querySelector(".hero-bg img");
+  const wipeImg = document.querySelector(".page-wipe img");
 
   // Paths (adjust based on your file structure)
   const assets = {
@@ -286,6 +287,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (logoImg) swapImage(logoImg, newLogoSrc);
     if (heroImg) swapImage(heroImg, newHeroSrc);
+
+    // Wiper image needs to inverse (White logo on black wipe, black logo on white wipe)
+    if (wipeImg) swapImage(wipeImg, newHeroSrc); // Using newHeroSrc here actually grabs the correct inverted logo name from the assets object
   }
 
   // Check localStorage usage

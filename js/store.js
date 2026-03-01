@@ -20,8 +20,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   productGrid.innerHTML = "";
   for (let i = 0; i < 6; i++) {
     const skel = document.createElement("div");
-    skel.classList.add("product-card");
+    skel.classList.add("product-card", "brutal-card");
     skel.style.pointerEvents = "none";
+    skel.style.padding = "10px";
     skel.innerHTML = `
           <div class="product-image-wrapper">
               <div class="skeleton skeleton-img" style="height: 300px;"></div>
@@ -188,7 +189,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Create Product Card HTML
         const card = document.createElement("div");
-        card.classList.add("product-card");
+        card.classList.add("product-card", "brutal-card");
+        card.style.padding = "15px";
+        card.style.display = "flex";
+        card.style.flexDirection = "column";
+        card.style.boxSizing = "border-box";
 
         // Description handling: Check if it's Rich Text (Blocks) or plain text
         let description = attrs.Description || attrs.description || "";
@@ -228,28 +233,19 @@ document.addEventListener("DOMContentLoaded", async () => {
               }
               <a href="product.html?id=${
                 product.documentId || product.id
-              }" class="add-to-cart-btn" style="
+              }" class="brutal-btn" style="
                   display: block;
-                  text-decoration: none;
                   text-align: center;
-                  margin-top: 10px;
+                  margin-top: 15px;
                   width: 100%;
-                  padding: 10px;
-                  background: black;
-                  color: white;
-                  border: none;
-                  font-family: inherit;
-                  cursor: pointer;
-                  text-transform: uppercase;
-                  letter-spacing: 1px;
+                  box-sizing: border-box;
                   font-size: 0.9rem;
-                  transition: opacity 0.3s;
               ">View Product</a>
           `;
 
         // No click listener needed for link, it just navigates
         // Add hover effect via JS since inline styles are used (or could use CSS class)
-        const btn = card.querySelector(".add-to-cart-btn");
+        const btn = card.querySelector(".brutal-btn");
         btn.addEventListener("mouseenter", () => (btn.style.opacity = "0.8"));
         btn.addEventListener("mouseleave", () => (btn.style.opacity = "1"));
 
