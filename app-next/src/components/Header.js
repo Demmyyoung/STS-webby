@@ -37,7 +37,7 @@ export default function Header() {
           <Link href="/" className="logo-link">
             {/* Using standard img tags to safely use CSS overrides on Next Image loops */}
             <img
-              src="/img/Recycle white.jpg"
+              src="/img/Recycle-white.jpg"
               alt="Sinner to Saints Logo"
               className="logo-image"
               id="logo-img"

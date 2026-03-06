@@ -78,7 +78,7 @@ export default function PageWipe() {
   return (
     <div className={`page-wipe ${!isWiping ? "hidden" : "mask-in"}`}>
       <img
-        src="/img/Recycle black.jpg"
+        src="/img/Recycle-black.jpg"
         style={{
           width: "150px",
           height: "auto",

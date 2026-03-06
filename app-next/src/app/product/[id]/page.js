@@ -40,7 +40,7 @@ export async function generateMetadata({ params }) {
     } else description = "";
   }
 
-  let imageUrl = `${API_URL}/img/Recycle black.jpg`;
+  let imageUrl = `${API_URL}/img/Recycle-black.jpg`;
   const imgData =
     attrs.ProductImage ||
     attrs.productimage ||

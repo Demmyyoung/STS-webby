@@ -53,7 +53,7 @@ export default async function Home() {
           style={{ position: "relative" }}
         >
           <Image
-            src="/img/Floating white.jpg"
+            src="/img/Floating-white.jpg"
             alt="Platform Screenshot"
             fill
             style={{ objectFit: "cover" }}
@@ -81,7 +81,7 @@ export default async function Home() {
                   ? parseFloat(rawPrice).toFixed(2)
                   : "0.00";
 
-              let imageUrl = "/img/Recycle black.jpg";
+              let imageUrl = "/img/Recycle-black.jpg";
               const imgData =
                 attrs.ProductImage ||
                 attrs.productimage ||
@@ -243,7 +243,7 @@ export default async function Home() {
           }}
         >
           <Image
-            src="/img/Floating black.jpg"
+            src="/img/Floating-black.jpg"
             alt="Signature Image"
             fill
             style={{ objectFit: "cover" }}

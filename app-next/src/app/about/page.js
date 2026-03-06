@@ -47,7 +47,7 @@ export default function About() {
           style={{ position: "relative", overflow: "hidden" }}
         >
           <Image
-            src="/img/Recycle black.jpg"
+            src="/img/Recycle-black.jpg"
             alt="Sinner to Saints Brand Image"
             fill
             style={{ objectFit: "cover" }}

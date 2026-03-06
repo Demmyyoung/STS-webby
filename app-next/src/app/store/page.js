@@ -68,7 +68,7 @@ export default async function Store() {
                 ? parseFloat(rawPrice).toFixed(2)
                 : "0.00";
 
-            let imageUrl = "/img/Recycle black.jpg";
+            let imageUrl = "/img/Recycle-black.jpg";
             let hoverImageUrl = null;
 
             const imgData =
