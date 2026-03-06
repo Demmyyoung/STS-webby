@@ -4,7 +4,7 @@ export default function AnnouncementBar() {
       className="announcement-bar"
       style={{
         position: "absolute",
-        top: "88px",
+        top: "0",
         left: "0",
         width: "100%",
         zIndex: 5,

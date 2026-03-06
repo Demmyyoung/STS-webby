@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 export default function PageWipe() {
+  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isWiping, setIsWiping] = useState(true);
@@ -30,6 +31,7 @@ export default function PageWipe() {
   // Set initial quote on mount only to prevent hydration mismatch
   useEffect(() => {
     setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Handle route changes
@@ -46,6 +48,7 @@ export default function PageWipe() {
     }, 600); // 600ms matches the vanilla JS transition time
 
     return () => clearTimeout(timeoutId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, searchParams]); // Trigger on pathname or searchParams change
 
   // Additional listener to hijack all Link clicks gracefully to trigger wipe BEFORE navigating
@@ -61,19 +64,36 @@ export default function PageWipe() {
         !href ||
         href.startsWith("http") ||
         href.startsWith("#") ||
-        target.target === "_blank"
+        target.target === "_blank" ||
+        target.target === "_parent"
       ) {
         return;
       }
 
-      // If we are navigating internally
+      // If we are navigating internally to the SAME exact path and query, ignore
+      if (
+        href ===
+        pathname +
+          (searchParams.toString() ? "?" + searchParams.toString() : "")
+      ) {
+        return;
+      }
+
+      e.preventDefault(); // Stop instant navigation
+
       setIsWiping(true);
       setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+
+      // Wait 500ms before triggering the actual route pushed, allowing screen to turn black
+      setTimeout(() => {
+        router.push(href);
+      }, 500);
     };
 
     document.addEventListener("click", handleLinkClick);
     return () => document.removeEventListener("click", handleLinkClick);
-  }, [pathname, searchParams]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname, searchParams, router]);
 
   return (
     <div className={`page-wipe ${!isWiping ? "hidden" : "mask-in"}`}>
